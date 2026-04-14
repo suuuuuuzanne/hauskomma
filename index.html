@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haus, Komma — Guest Guide</title>
+<link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --sand: #EDE8DF;
+    --warm-gray: #7a8f96;
+    --dark: #262e32;
+    --accent: #262e32;
+    --light-accent: #3a4d55;
+    --rule: #D8D0C4;
+    --penalty-bg: #e4eaed;
+    --penalty-border: #262e32;
+    --penalty-text: #1a2124;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--sand);
+    font-family: 'GmarketSans', sans-serif;
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  .screen-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 80px;
+    gap: 24px;
+  }
+
+  /* Header */
+  .site-header {
+    text-align: center;
+    padding: 40px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .site-header .logo-img {
+    width: 90px;
+    height: auto;
+    border-radius: 0;
+  }
+
+  .site-header .tagline {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  /* Language Bar */
+  .lang-bar {
+    display: flex;
+    gap: 5px;
+    background: var(--cream);
+    border-radius: 100px;
+    padding: 5px;
+    box-shadow: 0 2px 12px rgba(38,46,50,0.10);
+  }
+
+  .lang-btn {
+    padding: 9px 22px;
+    border-radius: 100px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--light-accent);
+    letter-spacing: 0.04em;
+    transition: all 0.22s ease;
+    font-family: 'GmarketSans', sans-serif;
+  }
+
+  .lang-btn.active {
+    background: var(--dark);
+    color: var(--cream);
+  }
+
+  .lang-btn:hover:not(.active) {
+    background: var(--sand);
+    color: var(--dark);
+  }
+
+  /* Cards */
+  .cards-grid {
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--cream);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(38,46,50,0.09);
+  }
+
+  .card-header {
+    background: var(--dark);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-header .icon { font-size: 20px; flex-shrink: 0; }
+
+  .card-header h2 {
+    font-family: 'GmarketSans', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+  }
+
+  .card-body { padding: 26px 28px; }
+
+  .card-body p {
+    font-size: 13.5px;
+    line-height: 1.95;
+    color: #2c3d45;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  .card-body p strong { font-weight: 500; color: var(--dark); }
+
+  /* Section subtitle */
+  .section-subtitle {
+    font-family: 'GmarketSans', sans-serif;
+    font-size: 15.5px;
+    font-weight: 500;
+    color: var(--dark);
+    letter-spacing: 0.06em;
+    margin: 20px 0 10px;
+    padding-bottom: 7px;
+    border-bottom: 1.5px solid var(--dark);
+    opacity: 0.7;
+  }
+
+  /* Rule list */
+  .rule-list { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+
+  .rule-list li { display: flex; gap: 13px; align-items: flex-start; font-size: 13.5px; line-height: 1.75; color: #2c3d45; font-weight: 400; }
+
+  .rule-num {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--dark);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .rule-text strong { font-weight: 500; color: var(--dark); display: block; margin-bottom: 4px; }
+  .rule-text { line-height: 1.85; color: #2c3d45; }
+
+  .penalty {
+    display: inline-block;
+    background: var(--penalty-bg);
+    border-left: 3px solid var(--dark);
+    padding: 4px 10px;
+    border-radius: 0 6px 6px 0;
+    font-size: 12.5px;
+    color: var(--penalty-text);
+    margin-top: 5px;
+  }
+
+  /* Step list */
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+
+  .step-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 13.5px; line-height: 1.8; color: #2c3d45; font-weight: 400; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--dark); font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* Info & wifi boxes */
+  .info-box {
+    background: var(--sand);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #3d4a50;
+    font-weight: 300;
+  }
+
+  .wifi-box {
+    background: var(--sand);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: #3d4a50;
+  }
+
+  .wifi-box code {
+    font-family: 'GmarketSans', monospace;
+    font-size: 13px;
+    background: var(--cream);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--dark);
+    font-weight: 500;
+  }
+
+  /* Time badges */
+  .time-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+
+  .time-badge {
+    background: var(--dark);
+    color: var(--cream);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+  }
+
+  .time-badge span {
+    display: block;
+    font-size: 10px;
+    opacity: 0.55;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+  }
+
+  /* Emergency */
+  .emergency-box { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+
+  .emerg-item {
+    background: var(--sand);
+    border: 1px solid var(--warm-gray);
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 13px;
+    color: var(--dark);
+  }
+
+  /* Transport */
+  .transport-method { margin-bottom: 14px; }
+
+  .transport-method .method-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* Food list */
+  .food-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .food-list li {
+    padding: 10px 14px;
+    background: var(--sand);
+    border-radius: 8px;
+    font-size: 13px;
+    color: #2c3d45;
+    font-weight: 400;
+    line-height: 1.8;
+  }
+
+  .food-list li strong { font-weight: 700; color: var(--dark); }
+  .food-addr { font-size: 11.5px; color: #3a5060; margin-top: 3px; font-weight: 400; }
+  .food-note { font-size: 12px; color: #2e4755; margin-top: 4px; font-style: italic; }
+
+  /* Sights */
+  .sight-list { display: flex; flex-direction: column; gap: 9px; }
+
+  .sight-item { background: var(--sand); border-radius: 8px; padding: 11px 15px; }
+  .sight-item .sight-name { font-weight: 500; font-size: 13.5px; color: var(--dark); margin-bottom: 4px; }
+  .sight-item p { font-size: 12.5px; color: #344d57; font-weight: 300; line-height: 1.8; margin-top: 4px; }
+
+  hr.section-rule { border: none; border-top: 1px solid var(--rule); margin: 14px 0; }
+
+  /* Thank-you card special */
+  .thankyou-inner {
+    background: var(--dark);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    color: var(--cream);
+    font-size: 13.5px;
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  .thankyou-inner p { color: #f0ede8; line-height: 1.9; margin-bottom: 12px; }
+  .thankyou-inner p:last-child { margin-bottom: 0; }
+  .thankyou-inner strong { font-weight: 500; }
+
+  .device-section { margin-bottom: 22px; }
+  .device-section:last-child { margin-bottom: 0; }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    .screen-wrapper { padding: 0; }
+    .site-header { display: none; }
+    .lang-bar { display: none; }
+    .cards-grid { max-width: none; gap: 0; }
+    .card {
+      border-radius: 0;
+      box-shadow: none;
+      page-break-after: always;
+      break-after: page;
+      width: 148mm;
+      min-height: 210mm;
+      margin: 0 auto;
+    }
+    .card:last-child { page-break-after: avoid; break-after: avoid; }
+    @page { size: A5 portrait; margin: 0; }
+  }
+
+
+  /* Highlight / emphasis styles */
+  .hl-dark {
+    background: var(--dark);
+    color: #FFFFFF;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .hl-accent {
+    background: #b8cdd6;
+    color: #1a2428;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .hl-warn {
+    background: #fde68a;
+    color: #6b4200;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* Example block */
+  .example-block {
+    background: #e8ecee;
+    border-left: 3px solid var(--dark);
+    border-radius: 0 8px 8px 0;
+    padding: 8px 14px;
+    margin-top: 6px;
+    font-size: 12.5px;
+    font-style: italic;
+    color: #3d4a50;
+    line-height: 1.65;
+  }
+  .example-block::before {
+    content: "예시 · Ex) ";
+    font-style: normal;
+    font-weight: 700;
+    color: var(--dark);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 3px;
+  }
+  [data-lang="zh"] .example-block::before { content: "示例 · Ex) "; }
+  [data-lang="ja"] .example-block::before { content: "例 · Ex) "; }
+
+  /* Line spacing between paragraphs in card-body */
+  .line-gap { display: block; height: 10px; }
+
+  /* Leaflet map container */
+  .map-embed {
+    width: 100%;
+    height: 160px;
+    border-radius: 10px;
+    margin-top: 8px;
+    display: block;
+    z-index: 1;
+  }
+  .map-open-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #1045a0;
+    text-decoration: none;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .map-open-link:hover { opacity: 1; }
+
+  .img-placeholder {
+    border: 2px dashed var(--warm-gray);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: #3a5060;
+    font-size: 12.5px;
+    margin: 10px 0;
+    background: var(--sand);
+    line-height: 1.8;
+  }
+  .img-placeholder .img-slot-label { display: block; font-size: 26px; margin-bottom: 6px; }
+  .img-actual { width: 100%; border-radius: 10px; margin: 10px 0; display: block; object-fit: cover; }
+  .map-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 5px; padding: 4px 11px;
+    background: #e8f0fe; color: #1a56a0;
+    border-radius: 6px; font-size: 11.5px; font-weight: 500;
+    text-decoration: none; border: 1px solid #c5d8f8;
+  }
+  .map-link:hover { background: #d0e3ff; }
+  .sight-map { margin-top: 6px; }
+
+  [data-lang] { display: none; }
+  [data-lang].active { display: block; }
+</style>
+</head>
+<body>
+
+<div class="screen-wrapper">
+
+  <header class="site-header">
+    <img class="logo-img" src="data:image/png;base64,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" alt="Haus Komma logo">
+    <div class="tagline">Guest Welcome Guide · Seoul · Hapjeong</div>
+  </header>
+
+  <div class="lang-bar">
+    <button class="lang-btn active" onclick="setLang('en',this)">English</button>
+    <button class="lang-btn" onclick="setLang('ko',this)">한국어</button>
+    <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+    <button class="lang-btn" onclick="setLang('ja',this)">日本語</button>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- ① WELCOME -->
+    <div class="card">
+      <div class="card-header"><div class="icon">🍀</div><h2 id="t-welcome">Welcome</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <p>Hello! I'm your host <strong>Mori</strong>. Welcome to <strong>Haus, Komma</strong>. ☺️</p>
+          <p>I love to travel and created Haus, Komma to capture the happy, relaxing memories of staying in different countries around the world. <strong>"Komma"</strong> means <em>"comma"</em> in Swedish — a moment to pause and breathe.</p>
+          <p>I hope this space gives you a comfortable, home-like retreat from your travels. We provide hand-picked hotel-quality bedding for the best experience. ☺️</p>
+          <p>May your time here in the heart of Seoul — with friends, family, or loved ones — become a beautiful piece of memory. 🍀</p>
+        </div>
+        <div data-lang="ko">
+          <p>안녕하세요! 호스트 <strong>모리</strong>에요. <strong>Haus, Komma</strong>에 오신 것을 환영합니다. ☺️</p>
+          <p>여행이 좋아 세계 여러 나라를 다니며 머물렀던 행복하고 편안했던 기억을 담아 <strong>"Haus, Komma"</strong>를 만들었어요. <strong>Komma</strong>는 스웨덴어로 <em>"쉼표"</em>라는 뜻입니다.</p>
+          <p>이 곳에서 여행의 피로를 풀며, 내 집같은 편안함으로 한 템포씩 쉬어가시기를 바랍니다. 손수 고른 호텔 침구로 최상의 서비스를 드리고 있어요. ☺️</p>
+          <p>친구, 가족, 연인들과 서울의 중심에서 예쁜 한 조각의 기억이 되시기를 바랍니다. 🍀</p>
+        </div>
+        <div data-lang="zh">
+          <p>您好！我是房东 <strong>Mori</strong>。欢迎来到 <strong>Haus, Komma</strong>。☺️</p>
+          <p>我热爱旅行，走访了世界各地，将那些幸福、舒适的住宿记忆凝聚于此，创造了 <strong>"Haus, Komma"</strong>。<strong>Komma</strong> 在瑞典语中意为<em>"逗号"</em>——一段小小的停歇与喘息。</p>
+          <p>希望这里能成为您旅途中的温馨港湾，让您感受到家的舒适。我们为您精心挑选了酒店级床品。☺️</p>
+          <p>愿您与朋友、家人或爱人在首尔的中心留下美好的回忆。🍀</p>
+        </div>
+        <div data-lang="ja">
+          <p>こんにちは！ホスト <strong>モリ</strong> です。<strong>Haus, Komma</strong> へようこそ。☺️</p>
+          <p>旅行が大好きで、世界各地に滞在した幸せで安らかな記憶を込めて <strong>"Haus, Komma"</strong> を作りました。<strong>Komma</strong> はスウェーデン語で <em>"コンマ（休符）"</em> を意味します。</p>
+          <p>旅の疲れを癒し、わが家のような心地よさで一息ついていただける場所になれば嬉しいです。厳選したホテル品質の寝具をご用意しています。☺️</p>
+          <p>友人、家族、大切な方と、ソウルの中心で素敵な思い出の一ページになりますように。🍀</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② HOUSE RULES -->
+    <div class="card">
+      <div class="card-header"><div class="icon">📋</div><h2 id="t-rules">House Rules</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <ul class="rule-list">
+            <li><div class="rule-num">1</div><div class="rule-text"><strong>Quiet Hours: 9 PM – 7 AM</strong>This is a residential building. Please keep noise to a minimum, including in the hallways.<div class="penalty">⚠️ Serious complaints → early check-out, NO refund</div></div></li>
+            <li><div class="rule-num">2</div><div class="rule-text"><strong>Check-in / Check-out Times</strong>Check-in: 16:00 &nbsp;|&nbsp; Check-out: 11:00<br>Early/late requests: <span class="hl-accent">+10,000 KRW / hr</span></div></li>
+            <li><div class="rule-num">3</div><div class="rule-text"><strong>Guest Count</strong>Please notify me of any additional guests. Extra guest: <span class="hl-accent">+20,000 KRW / person / night</span>.<div class="penalty">⚠️ Unauthorized guests → <span class="hl-warn">300,000 KRW</span> penalty + early check-out (no refund)</div></div></li>
+            <li><div class="rule-num">4</div><div class="rule-text"><strong>No Smoking (entire building, incl. e-cigarettes)</strong>Please use designated smoking areas.<div class="penalty">⚠️ Indoor smoking → <span class="hl-warn">500,000 KRW</span> fine</div></div></li>
+            <li><div class="rule-num">5</div><div class="rule-text"><strong>No Strong-Odor Cooking</strong>Meat, fish, or heavily spiced foods are not allowed indoors.</div></li>
+            <li><div class="rule-num">6</div><div class="rule-text"><strong>No Pets</strong>Pets are not permitted in the accommodation.</div></li>
+            <li><div class="rule-num">7</div><div class="rule-text"><strong>No Eating on the Bed</strong>Stains on bedding may incur an additional cleaning fee.</div></li>
+          </ul>
+        </div>
+        <div data-lang="ko">
+          <ul class="rule-list">
+            <li><div class="rule-num">1</div><div class="rule-text"><strong>소음 주의 (오후 9시 – 오전 7시)</strong>주거용 건물이므로 복도에서도 조용히 이동해 주세요.<div class="penalty">⚠️ 민원 발생 시 환불 불가 및 퇴실 조치</div></div></li>
+            <li><div class="rule-num">2</div><div class="rule-text"><strong>체크인 / 체크아웃 시간 준수</strong>체크인: 16:00 &nbsp;|&nbsp; 체크아웃: 11:00<br>이른 체크인/늦은 체크아웃 시 <span class="hl-accent">시간당 10,000원</span> 추가</div></li>
+            <li><div class="rule-num">3</div><div class="rule-text"><strong>추가 인원 사전 신고</strong>예약 외 추가 인원은 반드시 호스트에게 알려주세요. (<span class="hl-accent">1인 1박 20,000원</span>)<div class="penalty">⚠️ 무단 투숙 시 <span class="hl-warn">30만 원</span> 벌금 + 조기 퇴실 (환불 불가)</div></div></li>
+            <li><div class="rule-num">4</div><div class="rule-text"><strong>전체 금연 구역 (전자담배 포함)</strong>지정 흡연 구역 이용.<div class="penalty">⚠️ 실내 흡연 시 50만 원 벌금</div></div></li>
+            <li><div class="rule-num">5</div><div class="rule-text"><strong>냄새 강한 음식 조리 금지</strong>육류, 생선, 향신료 등 냄새가 강한 음식은 조리 불가합니다.</div></li>
+            <li><div class="rule-num">6</div><div class="rule-text"><strong>반려동물 출입 불가</strong></div></li>
+            <li><div class="rule-num">7</div><div class="rule-text"><strong>침대 위 식사 금지</strong>이불 얼룩 발생 시 추가 세탁비가 청구됩니다.</div></li>
+          </ul>
+        </div>
+        <div data-lang="zh">
+          <ul class="rule-list">
+            <li><div class="rule-num">1</div><div class="rule-text"><strong>安静时间：晚9点 – 早7点</strong>这是住宅楼，请在走廊内保持安静。<div class="penalty">⚠️ 严重投诉 → 强制退房，不予退款</div></div></li>
+            <li><div class="rule-num">2</div><div class="rule-text"><strong>请遵守入住/退房时间</strong>入住：16:00 &nbsp;|&nbsp; 退房：11:00<br>提前/延迟 +10,000 韩元/小时</div></li>
+            <li><div class="rule-num">3</div><div class="rule-text"><strong>额外人员须告知</strong>超出预订人数须提前通知。额外 +20,000 韩元/人/晚<div class="penalty">⚠️ 擅自携带未登记客人 → 罚款 <span class="hl-warn">300,000 韩元</span> + 强制退房</div></div></li>
+            <li><div class="rule-num">4</div><div class="rule-text"><strong>全楼禁烟（含电子烟）</strong>请使用指定吸烟区。<div class="penalty">⚠️ 室内吸烟 → 罚款 <span class="hl-warn">500,000 韩元</span></div></div></li>
+            <li><div class="rule-num">5</div><div class="rule-text"><strong>禁止烹饪气味强烈的食物</strong>禁止在室内烹饪肉类、鱼类或重香料食物。</div></li>
+            <li><div class="rule-num">6</div><div class="rule-text"><strong>禁止携带宠物</strong></div></li>
+            <li><div class="rule-num">7</div><div class="rule-text"><strong>请勿在床上饮食</strong>床品污渍可能产生额外清洁费用。</div></li>
+          </ul>
+        </div>
+        <div data-lang="ja">
+          <ul class="rule-list">
+            <li><div class="rule-num">1</div><div class="rule-text"><strong>静粛時間：午後9時 – 午前7時</strong>住宅ビルです。廊下でも静かにお過ごしください。<div class="penalty">⚠️ 苦情が入った場合、返金なしで退室をお願いする場合があります</div></div></li>
+            <li><div class="rule-num">2</div><div class="rule-text"><strong>チェックイン / チェックアウト時間を守ってください</strong>チェックイン：16:00 &nbsp;|&nbsp; チェックアウト：11:00<br>早着・延長 +10,000 ウォン/時間</div></li>
+            <li><div class="rule-num">3</div><div class="rule-text"><strong>追加ゲストは必ずご連絡ください</strong>予約人数を超える方がいる場合はホストへ。+20,000 ウォン/人/泊<div class="penalty">⚠️ 無断宿泊 → 罰金 <span class="hl-warn">300,000 ウォン</span> + 強制退室</div></div></li>
+            <li><div class="rule-num">4</div><div class="rule-text"><strong>建物内全面禁煙（電子タバコ含む）</strong>指定の喫煙エリアをご利用ください。<div class="penalty">⚠️ 室内喫煙 → 罰金 <span class="hl-warn">500,000 ウォン</span></div></div></li>
+            <li><div class="rule-num">5</div><div class="rule-text"><strong>においの強い料理は禁止</strong>肉類・魚介類・香辛料の強い料理の調理はご遠慮ください。</div></li>
+            <li><div class="rule-num">6</div><div class="rule-text"><strong>ペット入室禁止</strong></div></li>
+            <li><div class="rule-num">7</div><div class="rule-text"><strong>ベッドでの飲食禁止</strong>シミがついた場合、追加クリーニング費用が発生します。</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ CHECK-IN & ACCESS -->
+    <div class="card">
+      <div class="card-header"><div class="icon">🔑</div><h2 id="t-checkin">Check-In &amp; Access</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <div class="time-badges">
+            <div class="time-badge"><span>Check-in</span><span class="hl-dark">After 16:00</span></div>
+            <div class="time-badge"><span>Check-out</span><span class="hl-dark">Before 11:00</span></div>
+          </div><br>
+          <p>For early check-in or late check-out, please contact the host in advance. Availability depends on upcoming reservations. (+10,000 KRW / hour)</p>
+          <div class="section-subtitle">Building Entrance Code</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>Press the doorbell button (🔔)</div></li>
+            <li><div class="step-num">2</div><div>Enter the 4-digit code &nbsp;<strong>🔔 + 5050</strong></div></li>
+            <li><div class="step-num">3</div><div>Once the door unlocks, please enter.</div></li>
+          </ul>
+          <div class="section-subtitle">Room Door Lock</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>Touch the keypad to wake it up.</div></li>
+            <li><div class="step-num">2</div><div>Enter the <span class="hl-dark">4-digit code</span> provided, then press <span class="hl-dark">*</span></div></li>
+          </ul>
+          <div class="section-subtitle">Wi-Fi</div>
+          <div class="wifi-box">ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="hl-dark">SK_8DDE_5G</span><br>Password : <span class="hl-dark">AKM5B@1754</span></div>
+          <div class="section-subtitle">Emergency Contacts</div>
+          <div class="emergency-box">
+            <div class="emerg-item">🚑 <strong>119</strong> Ambulance</div>
+            <div class="emerg-item">🚓 <strong>112</strong> Police</div>
+            <div class="emerg-item">📱 <strong>+82 10-9518-9946</strong> Host Mori</div>
+          </div>
+        </div>
+        <div data-lang="ko">
+          <div class="time-badges">
+            <div class="time-badge"><span>체크인</span><span class="hl-dark">16:00 이후</span></div>
+            <div class="time-badge"><span>체크아웃</span><span class="hl-dark">11:00 이전</span></div>
+          </div><br>
+          <p>이른 체크인 또는 늦은 체크아웃은 미리 호스트에게 문의해 주세요. 다음 게스트 일정에 따라 조정이 어려울 수 있습니다. (시간당 10,000원)</p>
+          <div class="section-subtitle">공동 현관 출입</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>종모양(🔔) 버튼을 누릅니다.</div></li>
+            <li><div class="step-num">2</div><div>제공된 비밀번호 입력 &nbsp;<strong>🔔 + 5050</strong></div></li>
+            <li><div class="step-num">3</div><div>문이 열리면 입장합니다.</div></li>
+          </ul>
+          <div class="section-subtitle">객실 도어락 안내</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>키패드를 터치합니다.</div></li>
+            <li><div class="step-num">2</div><div>전달받은 <span class="hl-dark">비밀번호 4자리</span> 입력 후 <span class="hl-dark">*</span> 누르기</div></li>
+          </ul>
+          <div class="section-subtitle">Wi-Fi</div>
+          <div class="wifi-box">ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="hl-dark">SK_8DDE_5G</span><br>비밀번호 : <span class="hl-dark">AKM5B@1754</span></div>
+          <div class="section-subtitle">긴급 연락처</div>
+          <div class="emergency-box">
+            <div class="emerg-item">🚑 <strong>119</strong> 구급</div>
+            <div class="emerg-item">🚓 <strong>112</strong> 경찰</div>
+            <div class="emerg-item">📱 <strong>+82 10-9518-9946</strong> 호스트 모리</div>
+          </div>
+        </div>
+        <div data-lang="zh">
+          <div class="time-badges">
+            <div class="time-badge"><span>入住时间</span><span class="hl-dark">16:00 以后</span></div>
+            <div class="time-badge"><span>退房时间</span><span class="hl-dark"><span class="hl-dark">11:00 以前</span></span></div>
+          </div><br>
+          <p>如需提前入住或延迟退房，请提前联系房东。视后续预订情况，可能无法调整。（10,000 韩元/小时）</p>
+          <div class="section-subtitle">楼栋入口</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>按门铃按钮（🔔）</div></li>
+            <li><div class="step-num">2</div><div>输入提供的4位密码 &nbsp;<strong>🔔 + 5050</strong></div></li>
+            <li><div class="step-num">3</div><div>门开后请进入。</div></li>
+          </ul>
+          <div class="section-subtitle">客房门锁说明</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>触摸键盘使其唤醒。</div></li>
+            <li><div class="step-num">2</div><div>输入提供的 <span class="hl-dark">4位密码</span>，然后按 <span class="hl-dark">*</span></div></li>
+          </ul>
+          <div class="section-subtitle">Wi-Fi</div>
+          <div class="wifi-box">ID &nbsp;&nbsp;&nbsp;: <span class="hl-dark">SK_8DDE_5G</span><br>密码 : <span class="hl-dark">AKM5B@1754</span></div>
+          <div class="section-subtitle">紧急联系</div>
+          <div class="emergency-box">
+            <div class="emerg-item">🚑 <strong>119</strong> 救护车</div>
+            <div class="emerg-item">🚓 <strong>112</strong> 警察</div>
+            <div class="emerg-item">📱 <strong>+82 10-9518-9946</strong> 房东 Mori</div>
+          </div>
+        </div>
+        <div data-lang="ja">
+          <div class="time-badges">
+            <div class="time-badge"><span>チェックイン</span><span class="hl-dark">16:00 以降</span></div>
+            <div class="time-badge"><span>チェックアウト</span><span class="hl-dark"><span class="hl-dark">11:00 以前</span></span></div>
+          </div><br>
+          <p>早着・延長をご希望の場合は、事前にホストへお問い合わせください。次のご予約状況によって対応できない場合があります。（10,000 ウォン/時間）</p>
+          <div class="section-subtitle">共用エントランス</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>ドアベルボタン（🔔）を押す</div></li>
+            <li><div class="step-num">2</div><div>提供された4桁のコードを入力 &nbsp;<strong>🔔 + 5050</strong></div></li>
+            <li><div class="step-num">3</div><div>ドアが開いたら入室してください。</div></li>
+          </ul>
+          <div class="section-subtitle">客室ドアロック</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>キーパッドをタッチして起動します。</div></li>
+            <li><div class="step-num">2</div><div>お伝えした <span class="hl-dark">4桁のパスワード</span> を入力後、<span class="hl-dark">*</span> を押してください。</div></li>
+          </ul>
+          <div class="section-subtitle">Wi-Fi</div>
+          <div class="wifi-box">ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="hl-dark">SK_8DDE_5G</span><br>パスワード : <span class="hl-dark">AKM5B@1754</span></div>
+          <div class="section-subtitle">緊急連絡先</div>
+          <div class="emergency-box">
+            <div class="emerg-item">🚑 <strong>119</strong> 救急</div>
+            <div class="emerg-item">🚓 <strong>112</strong> 警察</div>
+            <div class="emerg-item">📱 <strong>+82 10-9518-9946</strong> ホスト モリ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ LUGGAGE STORAGE -->
+    <div class="card">
+      <div class="card-header"><div class="icon">🧳</div><h2 id="t-luggage">Free Luggage Storage</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <p>We offer a <strong>free luggage storage service</strong> at check-in and check-out. Please message the host to arrange.</p>
+          <div class="section-subtitle">How to Reserve</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>Message the host to check availability.<br><div class="example-block">"I'd like to store two 28-inch suitcases after check-out. Is that possible?"</div></div></li>
+            <li><div class="step-num">2</div><div>Once confirmed, share your desired storage time.<br><div class="example-block">"From 11:00 AM to 4:00 PM, please."</div></div></li>
+            <li><div class="step-num">3</div><div>The host will share the locker location and password.</div></li>
+          </ul>
+          <div class="section-subtitle">Finding the Locker</div>
+          <div class="img-placeholder">
+            <span class="img-slot-label">📦</span>
+            <strong>보관함 사진을 여기에 추가하세요</strong><br>
+            아래 '이미지 첨부 방법' 안내를 참고해 주세요.
+          </div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>Face the building entrance and turn right to walk behind the building.</div></li>
+            <li><div class="step-num">2</div><div>Follow the <strong>"Luggage Storage"</strong> signs.</div></li>
+            <li><div class="step-num">3</div><div>Enter the password for your assigned locker (A / B / C / D).</div></li>
+            <li><div class="step-num">4</div><div>Place your luggage inside and lock it. (Fits up to 28-inch suitcases)</div></li>
+          </ul>
+        </div>
+        <div data-lang="ko">
+          <p>체크인 / 체크아웃 시 <strong>무료 짐보관 서비스</strong>를 제공합니다. 호스트에게 메시지로 문의해 주세요.</p>
+          <div class="section-subtitle">예약 방법</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>호스트에게 짐보관 가능 여부를 문의해 주세요.<br><div class="example-block">"체크아웃 후 28인치 캐리어 두 개 보관 가능한가요?"</div></div></li>
+            <li><div class="step-num">2</div><div>가능 여부 확인 후 정확한 시간을 알려주세요.<br><div class="example-block">"11:00 AM ~ 4:00 PM 이용하고 싶어요."</div></div></li>
+            <li><div class="step-num">3</div><div>호스트가 보관함 위치와 비밀번호를 안내해 드립니다.</div></li>
+          </ul>
+          <div class="section-subtitle">보관함 찾는 법</div>
+          <div class="img-placeholder">
+            <span class="img-slot-label">📦</span>
+            <strong>보관함 사진을 여기에 추가하세요</strong><br>
+            HTML 파일을 열어 img 태그로 교체해 주세요.
+          </div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>건물 입구를 마주보고 오른쪽으로 돌아 건물 뒤편으로 이동.</div></li>
+            <li><div class="step-num">2</div><div><strong>"Luggage Storage"</strong> 표지판을 따라가세요.</div></li>
+            <li><div class="step-num">3</div><div>배정된 보관함(A / B / C / D)에 비밀번호 입력 후 오픈.</div></li>
+            <li><div class="step-num">4</div><div>짐을 넣고 잠금. (28인치 캐리어까지 가능)</div></li>
+          </ul>
+        </div>
+        <div data-lang="zh">
+          <p>入住和退房时提供<strong>免费行李寄存服务</strong>。请提前发消息联系房东。</p>
+          <div class="section-subtitle">预约方法</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>向房东发消息询问是否可以寄存行李。<br><div class="example-block">"退房后我想寄存两个28寸行李箱，可以吗？"</div></div></li>
+            <li><div class="step-num">2</div><div>确认可以后，告知房东具体寄存时间。<br><div class="example-block">"我想从上午11点存到下午4点。"</div></div></li>
+            <li><div class="step-num">3</div><div>房东会告知储物柜位置和密码。</div></li>
+          </ul>
+          <div class="section-subtitle">找到储物柜</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>面朝楼栋入口向右转，绕到建筑物后方。</div></li>
+            <li><div class="step-num">2</div><div>沿着 <strong>"Luggage Storage"</strong> 指示牌前行。</div></li>
+            <li><div class="step-num">3</div><div>在指定储物柜（A / B / C / D）上输入密码并开锁。</div></li>
+            <li><div class="step-num">4</div><div>放入行李后重新上锁。（最大可存放28寸行李箱）</div></li>
+          </ul>
+        </div>
+        <div data-lang="ja">
+          <p>チェックイン・チェックアウト時に<strong>無料手荷物預かりサービス</strong>をご利用いただけます。ホストへメッセージでお問い合わせください。</p>
+          <div class="section-subtitle">予約方法</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>ホストに預け入れ可能かメッセージでご確認ください。<br><div class="example-block">"チェックアウト後に28インチのスーツケース2個を預けたいのですが可能ですか？"</div></div></li>
+            <li><div class="step-num">2</div><div>確認後、ご希望の時間をお知らせください。<br><div class="example-block">"午前11時から午後4時まで利用したいです。"</div></div></li>
+            <li><div class="step-num">3</div><div>ホストがロッカーの場所とパスワードをお知らせします。</div></li>
+          </ul>
+          <div class="section-subtitle">ロッカーの場所</div>
+          <ul class="step-list">
+            <li><div class="step-num">1</div><div>建物正面入口を向いて右に曲がり、建物の裏側へ進む。</div></li>
+            <li><div class="step-num">2</div><div><strong>"Luggage Storage"</strong> の案内板に従って進む。</div></li>
+            <li><div class="step-num">3</div><div>指定のロッカー（A / B / C / D）にパスワードを入力して開錠。</div></li>
+            <li><div class="step-num">4</div><div>荷物を入れて再び施錠。（28インチまで対応）</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ DEVICES -->
+    <div class="card">
+      <div class="card-header"><div class="icon">⚙️</div><h2 id="t-devices">Devices &amp; Appliances</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <div class="device-section">
+            <div class="section-subtitle">🌬️ Air Conditioner</div>
+            <ul class="step-list">
+              <li><div class="step-num">🔌</div><div><strong>Power ON/OFF</strong><br>Press the <span class="hl-dark">red power button</span> on the middle-left of the remote.</div></li>
+              <li><div class="step-num">🌡️</div><div><strong>Temperature</strong><br>Use the <span class="hl-dark">▲ / ▼</span> arrow buttons to adjust.</div></li>
+              <li><div class="step-num">💨</div><div><strong>Wind Strength</strong><br>Use the Wind Strength button to control airflow power.</div></li>
+              <li><div class="step-num">↕️</div><div><strong>Wind Angle</strong><br>Use the Wind Angle Control button to adjust vertical direction (up/down).</div></li>
+              <li><div class="step-num">🔄</div><div><strong>Up &amp; Down Wind</strong> — air swings vertically<br><strong>Left &amp; Right Wind</strong> — air swings horizontally<br><strong>Indirect Wind</strong> — gentle, soft indirect breeze<br><strong>Power Wind</strong> — strong airflow for quick cooling</div></li>
+              <li><div class="step-num">⏱️</div><div><strong>Sleep Schedule</strong> — auto-adjusts for better sleep<br><strong>On / Off Reserve</strong> — set timer to turn on or off automatically<br><strong>Unset</strong> — cancels all timer settings</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🔥 Boiler — Hot Water</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>Press the <span class="hl-dark">power button</span> to turn on.</div></li>
+              <li><div class="step-num">2</div><div>Temperature is preset to <span class="hl-accent">60°C</span>. Adjust with the dial if needed.<br><div class="penalty">⚠️ Do not set above 60°C — risk of burns.</div></div></li>
+              <li><div class="step-num">3</div><div>Wait a moment, then use the hot water.</div></li>
+              <li><div class="step-num">OFF</div><div>Always press the <span class="hl-dark">power button</span> to turn off after use.</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🏠 Boiler — Heating <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · available in cold weather</small></div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>Press the <span class="hl-dark">power button</span> to turn on.</div></li>
+              <li><div class="step-num">2</div><div>Press the <span class="hl-dark">Heating button</span>.</div></li>
+              <li><div class="step-num">3</div><div>Turn the dial to set temperature to <span class="hl-accent">23–24°C</span>.</div></li>
+              <li><div class="step-num">OFF</div><div>Always press the <span class="hl-dark">power button</span> to turn off after use.</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🍳 Induction Stove</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>Hold Power button <strong>1 second</strong> to turn on.</div></li>
+              <li><div class="step-num">2</div><div>Press [Highlight +] once → "1" appears, heating begins.</div></li>
+              <li><div class="step-num">3</div><div>Adjust heat with + / – buttons (max: level 9).</div></li>
+              <li><div class="step-num">4</div><div>Hold Power button <strong>1 second</strong> to turn off.</div></li>
+            </ul>
+            <div class="penalty">⚠️ If 'H' is displayed, surface is very hot — do NOT touch.</div>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🧺 Washer &amp; Dryer <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · long-stay guests only · balcony in small room</small></div>
+            <p><strong>Washer:</strong> Standard Wash (~1 hr). Drop laundry capsule directly in drum. Max 7 kg.</p>
+            <p><strong>Dryer:</strong> Standard Dry (~2 hrs) or Quick Dry (~40 min). Empty lint filter after each use.</p>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">♻️ Trash &amp; Recycling</div>
+            <div class="info-box">📍 Dispose all trash <strong>in front of the column on the 1st floor outside the building.</strong></div>
+            <ul class="rule-list">
+              <li><div class="rule-num" style="background:var(--warm-gray)">🗑️</div><div class="rule-text"><strong>General Waste</strong>Gray bin → tie in pink/white standard bag → designated area.</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">♻️</div><div class="rule-text"><strong>Recyclables</strong>Separate: plastic / paper / vinyl / cans. New transparent bags under the sink.</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">🥬</div><div class="rule-text"><strong>Food Waste</strong>Bin beside sink → yellow bag → <strong>green-lidded bin</strong> at designated area. New yellow bags under sink.</div></li>
+            </ul>
+          </div>
+        </div>
+        <div data-lang="ko">
+          <div class="device-section">
+            <div class="section-subtitle">🌬️ 에어컨</div>
+            <ul class="step-list">
+              <li><div class="step-num">🔌</div><div><strong>전원 ON/OFF</strong><br>리모컨 중앙 왼쪽의 <span class="hl-dark">빨간 전원 버튼</span>으로 켜고 끕니다.</div></li>
+              <li><div class="step-num">🌡️</div><div><strong>온도 조절</strong><br><span class="hl-dark">▲ / ▼</span> 화살표 버튼으로 조절하세요.</div></li>
+              <li><div class="step-num">💨</div><div><strong>풍량 조절</strong><br>풍량 버튼으로 바람 세기를 조절하세요.</div></li>
+              <li><div class="step-num">↕️</div><div><strong>풍향 조절</strong><br>풍향 버튼으로 수직 방향(위/아래)을 조절합니다.</div></li>
+              <li><div class="step-num">🔄</div><div><strong>상하 바람</strong> — 바람이 위아래로 움직임<br><strong>좌우 바람</strong> — 바람이 좌우로 움직임<br><strong>간접 바람</strong> — 부드러운 간접 바람 제공<br><strong>강풍 모드</strong> — 빠르게 시원해지는 강한 바람</div></li>
+              <li><div class="step-num">⏱️</div><div><strong>수면 예약</strong> — 수면에 적합하게 자동 조절<br><strong>켜짐/꺼짐 예약</strong> — 설정 시간에 자동 켜짐/꺼짐<br><strong>예약 해제</strong> — 모든 예약 설정 취소</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🔥 보일러 — 온수 사용</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><span class="hl-dark">전원 버튼</span>을 눌러 켭니다.</div></li>
+              <li><div class="step-num">2</div><div>온도는 <span class="hl-accent">60°C</span>로 설정되어 있습니다. 원하시는 온도는 다이얼을 돌려 맞춰주세요.<br><div class="penalty">⚠️ 60도 이상으로 설정하지 마세요. 화상의 위험이 있습니다.</div></div></li>
+              <li><div class="step-num">3</div><div>잠시 기다리면 온수가 나옵니다.</div></li>
+              <li><div class="step-num">OFF</div><div>사용 후에는 반드시 <span class="hl-dark">전원 버튼</span>을 눌러 꺼주세요.</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🏠 보일러 — 난방 사용 <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · 날씨가 추워지면 공급됩니다</small></div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><span class="hl-dark">전원 버튼</span>을 눌러 켭니다.</div></li>
+              <li><div class="step-num">2</div><div><span class="hl-dark">난방 버튼</span>을 눌러주세요.</div></li>
+              <li><div class="step-num">3</div><div>다이얼을 돌려 온도를 <span class="hl-accent">23~24°C</span>로 설정해주세요.</div></li>
+              <li><div class="step-num">OFF</div><div>사용 후에는 반드시 <span class="hl-dark">전원 버튼</span>을 눌러 꺼주세요.</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🍳 인덕션</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>전원 버튼 <strong>1초</strong> 길게 눌러 켜기</div></li>
+              <li><div class="step-num">2</div><div>[Highlight +] 버튼 한 번 누르기 → "1" 표시 후 가열 시작</div></li>
+              <li><div class="step-num">3</div><div>+ / – 버튼으로 열 세기 조절 (최대 9단계)</div></li>
+              <li><div class="step-num">4</div><div>전원 버튼 <strong>1초</strong> 길게 눌러 끄기</div></li>
+            </ul>
+            <div class="penalty">⚠️ 패널에 'H'가 표시되면 표면이 매우 뜨겁습니다. 절대 만지지 마세요.</div>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🧺 세탁기 / 건조기 <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · 장기 숙박 전용 · 작은방 베란다</small></div>
+            <p><strong>세탁기:</strong> 표준 세탁 (~1시간). 캡슐 세제는 드럼 안에 직접. 최대 7kg.</p>
+            <p><strong>건조기:</strong> 표준 건조 (~2시간) 또는 쾌속 건조 (~40분). 사용 후 먼지 필터 꼭 비우기.</p>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">♻️ 쓰레기 분리수거</div>
+            <div class="info-box">📍 쓰레기는 모두 <strong>건물 외부 1층 기둥 앞</strong>에 배출해 주세요.</div>
+            <ul class="rule-list">
+              <li><div class="rule-num" style="background:var(--warm-gray)">🗑️</div><div class="rule-text"><strong>일반 쓰레기</strong>회색 쓰레기통 → 종량제 봉투(분홍/흰색)에 담아 지정 장소 배출.</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">♻️</div><div class="rule-text"><strong>분리수거</strong>플라스틱 / 종이 / 비닐 / 캔으로 분리. 새 투명 비닐봉지는 싱크대 아래.</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">🥬</div><div class="rule-text"><strong>음식물 쓰레기</strong>싱크대 옆 통 → 노란 봉지 묶어 <strong>초록 뚜껑 통</strong>에 배출. 새 봉지는 싱크대 아래.</div></li>
+            </ul>
+          </div>
+        </div>
+        <div data-lang="zh">
+          <div class="device-section">
+            <div class="section-subtitle">🌬️ 空调</div>
+            <ul class="step-list">
+              <li><div class="step-num">🔌</div><div><strong>开/关机</strong><br>按遥控器中左侧的 <span class="hl-dark">红色电源键</span>。</div></li>
+              <li><div class="step-num">🌡️</div><div><strong>温度调节</strong><br>使用 <span class="hl-dark">▲ / ▼</span> 按钮进行调节。</div></li>
+              <li><div class="step-num">💨</div><div><strong>风量调节</strong><br>使用风量按钮调整风力大小。</div></li>
+              <li><div class="step-num">↕️</div><div><strong>风向（上下）</strong><br>使用风向按钮调整垂直方向（上/下）。</div></li>
+              <li><div class="step-num">🔄</div><div><strong>上下摆风</strong> — 风向上下摆动<br><strong>左右摆风</strong> — 风向左右摆动<br><strong>柔和间接风</strong> — 提供温和的间接送风<br><strong>强力风</strong> — 快速降温的强劲风力</div></li>
+              <li><div class="step-num">⏱️</div><div><strong>睡眠预约</strong> — 自动调节为适合睡眠的状态<br><strong>开/关预约</strong> — 设定自动开机或关机时间<br><strong>取消预约</strong> — 取消所有预约设置</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🔥 锅炉 — 热水使用</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>按 <span class="hl-dark">电源键</span> 开机。</div></li>
+              <li><div class="step-num">2</div><div>热水默认设置为 <span class="hl-accent">60°C</span>，如需调节请使用旋钮。<br><div class="penalty">⚠️ 请勿超过 60°C，以防烫伤。</div></div></li>
+              <li><div class="step-num">3</div><div>稍等片刻即有热水。</div></li>
+              <li><div class="step-num">OFF</div><div>使用完毕后请按 <span class="hl-dark">电源键</span> 关机。</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🏠 锅炉 — 暖气使用 <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · 天气变冷后可使用</small></div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>按 <span class="hl-dark">电源键</span> 开机。</div></li>
+              <li><div class="step-num">2</div><div>按 <span class="hl-dark">暖气键</span>。</div></li>
+              <li><div class="step-num">3</div><div>转动旋钮，将温度设置为 <span class="hl-accent">23–24°C</span>。</div></li>
+              <li><div class="step-num">OFF</div><div>使用完毕后请按 <span class="hl-dark">电源键</span> 关机。</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🍳 电磁炉</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>长按电源键 <strong>1 秒</strong>开机。</div></li>
+              <li><div class="step-num">2</div><div>按 [Highlight +] 一次 → 显示"1"，开始加热。</div></li>
+              <li><div class="step-num">3</div><div>用 + / – 键调节火力（最高 9 档）。</div></li>
+              <li><div class="step-num">4</div><div>长按电源键 <strong>1 秒</strong>关机。</div></li>
+            </ul>
+            <div class="penalty">⚠️ 显示'H'时，面板表面非常烫，切勿触摸。</div>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🧺 洗衣机 / 烘干机 <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · 仅限长住客 · 小房间阳台</small></div>
+            <p><strong>洗衣机：</strong>标准洗涤（约1小时）。将洗衣胶囊直接放入滚筒。最大 7kg。</p>
+            <p><strong>烘干机：</strong>标准烘干（约2小时）或快速烘干（约40分钟）。使用后清理棉绒过滤网。</p>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">♻️ 垃圾 &amp; 分类回收</div>
+            <div class="info-box">📍 所有垃圾请投放至<strong>建筑物外1楼柱子前方的指定区域。</strong></div>
+            <ul class="rule-list">
+              <li><div class="rule-num" style="background:var(--warm-gray)">🗑️</div><div class="rule-text"><strong>一般垃圾</strong>灰色垃圾桶 → 粉色/白色标准垃圾袋 → 指定区域丢弃。</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">♻️</div><div class="rule-text"><strong>可回收垃圾</strong>分类：塑料 / 纸 / 塑料袋 / 罐头。新透明垃圾袋放在水槽下方。</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">🥬</div><div class="rule-text"><strong>厨余垃圾</strong>水槽旁厨余桶 → 黄色袋扎好放入<strong>绿盖桶</strong>。新黄色袋在水槽下方。</div></li>
+            </ul>
+          </div>
+        </div>
+        <div data-lang="ja">
+          <div class="device-section">
+            <div class="section-subtitle">🌬️ エアコン</div>
+            <ul class="step-list">
+              <li><div class="step-num">🔌</div><div><strong>電源 ON/OFF</strong><br>リモコン中央左の <span class="hl-dark">赤い電源ボタン</span> で操作します。</div></li>
+              <li><div class="step-num">🌡️</div><div><strong>温度調節</strong><br><span class="hl-dark">▲ / ▼</span> ボタンで調整してください。</div></li>
+              <li><div class="step-num">💨</div><div><strong>風量調節</strong><br>風量ボタンで風の強さを調整します。</div></li>
+              <li><div class="step-num">↕️</div><div><strong>風向調節（上下）</strong><br>風角度ボタンで上下方向を調整できます。</div></li>
+              <li><div class="step-num">🔄</div><div><strong>上下スイング</strong> — 風が上下に動きます<br><strong>左右スイング</strong> — 風が左右に動きます<br><strong>間接風</strong> — やわらかい間接送風を提供<br><strong>パワー風</strong> — 素早く冷やす強い風</div></li>
+              <li><div class="step-num">⏱️</div><div><strong>おやすみタイマー</strong> — 睡眠に適した自動調節<br><strong>入/切タイマー</strong> — 設定時刻に自動オン/オフ<br><strong>タイマー解除</strong> — すべてのタイマー設定を解除</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🔥 ボイラー — 給湯</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><span class="hl-dark">電源ボタン</span>を押してオンにします。</div></li>
+              <li><div class="step-num">2</div><div>温度は <span class="hl-accent">60°C</span> に設定済みです。調整はダイヤルで行ってください。<br><div class="penalty">⚠️ 60°C 以上に設定しないこと（火傷の危険）</div></div></li>
+              <li><div class="step-num">3</div><div>しばらく待つとお湯が出ます。</div></li>
+              <li><div class="step-num">OFF</div><div>使用後は必ず <span class="hl-dark">電源ボタン</span> を押してオフにしてください。</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🏠 ボイラー — 暖房 <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · 寒くなる季節に使用可能</small></div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><span class="hl-dark">電源ボタン</span>を押してオンにします。</div></li>
+              <li><div class="step-num">2</div><div><span class="hl-dark">暖房ボタン</span>を押します。</div></li>
+              <li><div class="step-num">3</div><div>ダイヤルを回して <span class="hl-accent">23–24°C</span> に設定してください。</div></li>
+              <li><div class="step-num">OFF</div><div>使用後は必ず <span class="hl-dark">電源ボタン</span> を押してオフにしてください。</div></li>
+            </ul>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🍳 IH クッキングヒーター</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>電源ボタンを <strong>1 秒</strong>長押しでオン。</div></li>
+              <li><div class="step-num">2</div><div>[Highlight +] を 1 回押す → "1" 表示で加熱開始。</div></li>
+              <li><div class="step-num">3</div><div>+ / – で火力調節（最大：9段階）。</div></li>
+              <li><div class="step-num">4</div><div>電源ボタンを <strong>1 秒</strong>長押しでオフ。</div></li>
+            </ul>
+            <div class="penalty">⚠️ 'H' が表示されている場合、表面が非常に熱い状態です。絶対に触れないでください。</div>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">🧺 洗濯機 / 乾燥機 <small style="font-weight:300;color:var(--warm-gray);font-size:11px"> · 長期滞在者限定 · 小部屋のバルコニー</small></div>
+            <p><strong>洗濯機：</strong>標準洗い（約1時間）。洗濯カプセルをドラム内に直接投入。最大 7kg。</p>
+            <p><strong>乾燥機：</strong>標準乾燥（約2時間）またはクイック乾燥（約40分）。使用後フィルター清掃。</p>
+          </div>
+          <div class="device-section">
+            <div class="section-subtitle">♻️ ゴミ &amp; 分別</div>
+            <div class="info-box">📍 ゴミはすべて<strong>建物外1階の柱の前</strong>の指定場所に出してください。</div>
+            <ul class="rule-list">
+              <li><div class="rule-num" style="background:var(--warm-gray)">🗑️</div><div class="rule-text"><strong>一般ごみ</strong>グレーのごみ箱 → ピンク/白の指定ごみ袋 → 指定場所へ。</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">♻️</div><div class="rule-text"><strong>資源ごみ</strong>プラスチック / 紙 / ビニール / 缶に分別。新しい透明袋はシンク下。</div></li>
+              <li><div class="rule-num" style="background:#4a5a63">🥬</div><div class="rule-text"><strong>生ごみ</strong>シンク横の生ごみ入れ → 黄色の袋を縛って<strong>緑の蓋の容器</strong>へ。新しい袋はシンク下。</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑥ TRANSPORTATION -->
+    <div class="card">
+      <div class="card-header"><div class="icon">🚆</div><h2 id="t-transport">Transportation</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <div class="section-subtitle">✈️ Incheon Airport → Haus Komma</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 Airport Limousine Bus No. 6002</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300">Get off at <strong>Hapjeong Station Exit 1</strong>.<br>First: 5:15 AM / Last: ~11:00 PM &nbsp;|&nbsp; Adult 17,000 · Child 12,000 KRW</p>
+          </div>
+          <div class="transport-method">
+            <div class="method-title">🚎 Subway (AREX + Line 2)</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>Take AREX from Incheon Airport T1 or T2 → Seoul Station direction</div></li>
+              <li><div class="step-num">2</div><div>Get off at <strong>Hongik Univ. (Hongdae) Station</strong></div></li>
+              <li><div class="step-num">3</div><div>Transfer to <strong>Line 2 (Green)</strong> → next stop: <strong>Hapjeong Station</strong></div></li>
+              <li><div class="step-num">4</div><div>Use <strong>Exit 8</strong> &nbsp;🚶 7 min walk to Haus Komma</div></li>
+            </ul>
+          </div>
+          <hr class="section-rule">
+          <div class="section-subtitle">✈️ Haus Komma → Incheon Airport</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 Bus No. 6002 from Hapjeong Station Exit 1</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300">First: 4:40 AM / Last: 9:27 PM &nbsp;|&nbsp; Adult 17,000 · Child 12,000 KRW</p>
+          </div>
+          <div class="transport-method">
+            <div class="method-title">🚎 Subway (Line 2 + AREX)</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>Walk to <strong>Hapjeong Station Exit 8</strong> (~7 min)</div></li>
+              <li><div class="step-num">2</div><div>Take <strong>Line 2 (Green)</strong> → <strong>Hongik Univ. Station</strong></div></li>
+              <li><div class="step-num">3</div><div>Transfer to <strong>AREX</strong> → Incheon Airport T1 or T2</div></li>
+            </ul>
+          </div>
+        </div>
+        <div data-lang="ko">
+          <div class="section-subtitle">✈️ 인천공항 → Haus Komma</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 리무진 버스 6002번</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300"><strong>합정역 1번출구</strong>에서 하차. 첫차 5:15 AM / 막차 ~11:00 PM<br>성인 17,000원 / 아동 12,000원</p>
+          </div>
+          <div class="transport-method">
+            <div class="method-title">🚎 공항철도 + 지하철 2호선</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>인천공항 T1 또는 T2 → 공항철도 (서울역 방향) 탑승</div></li>
+              <li><div class="step-num">2</div><div><strong>홍익대입구역</strong>에서 하차</div></li>
+              <li><div class="step-num">3</div><div><strong>2호선(녹색)</strong>으로 환승 → 다음 정류장 <strong>합정역</strong></div></li>
+              <li><div class="step-num">4</div><div><strong>8번 출구</strong> 이용 &nbsp;🚶 도보 약 7분</div></li>
+            </ul>
+          </div>
+          <hr class="section-rule">
+          <div class="section-subtitle">✈️ Haus Komma → 인천공항</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 합정역 1번출구 → 6002번 버스</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300">첫차 4:40 AM / 막차 9:27 PM &nbsp;|&nbsp; 성인 17,000원 / 아동 12,000원</p>
+          </div>
+        </div>
+        <div data-lang="zh">
+          <div class="section-subtitle">✈️ 仁川机场 → Haus Komma</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 机场豪华巴士 6002 路</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300">在<strong>合井站1号出口</strong>下车。首班 5:15 AM / 末班 ~11:00 PM<br>成人 17,000 · 儿童 12,000 韩元</p>
+          </div>
+          <div class="transport-method">
+            <div class="method-title">🚎 机场快线 + 地铁2号线</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>在仁川机场T1或T2乘坐AREX（方向：首尔站）</div></li>
+              <li><div class="step-num">2</div><div>在<strong>弘益大学站（弘大入口）</strong>下车</div></li>
+              <li><div class="step-num">3</div><div>换乘<strong>2号线（绿色）</strong>→ 下一站：<strong>合井站</strong></div></li>
+              <li><div class="step-num">4</div><div>走<strong>8号出口</strong> &nbsp;🚶 步行约 7 分钟</div></li>
+            </ul>
+          </div>
+          <hr class="section-rule">
+          <div class="section-subtitle">✈️ Haus Komma → 仁川机场</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 合井站1号出口乘坐 6002 路</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300">首班 4:40 AM / 末班 9:27 PM &nbsp;|&nbsp; 成人 17,000 · 儿童 12,000 韩元</p>
+          </div>
+        </div>
+        <div data-lang="ja">
+          <div class="section-subtitle">✈️ 仁川空港 → Haus Komma</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 空港リムジンバス 6002 番</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300"><strong>合井駅1番出口</strong>で下車。始発 5:15 AM / 終発 ~11:00 PM<br>大人 17,000 · 子供 12,000 ウォン</p>
+          </div>
+          <div class="transport-method">
+            <div class="method-title">🚎 空港鉄道 + 地下鉄2号線</div>
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>仁川空港 T1 または T2 で AREX 乗車（ソウル駅方面）</div></li>
+              <li><div class="step-num">2</div><div><strong>弘益大学駅（弘大入口）</strong>で下車</div></li>
+              <li><div class="step-num">3</div><div><strong>2号線（緑）</strong>に乗り換え → 次の駅：<strong>合井駅</strong></div></li>
+              <li><div class="step-num">4</div><div><strong>8番出口</strong>を利用 &nbsp;🚶 徒歩約 7 分</div></li>
+            </ul>
+          </div>
+          <hr class="section-rule">
+          <div class="section-subtitle">✈️ Haus Komma → 仁川空港</div>
+          <div class="transport-method">
+            <div class="method-title">🚌 合井駅1番出口から 6002 番バス</div>
+            <p style="font-size:13px;color:#3d4a50;line-height:1.7;font-weight:300">始発 4:40 AM / 終発 9:27 PM &nbsp;|&nbsp; 大人 17,000 · 子供 12,000 ウォン</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑦ LOCAL FOOD -->
+    <div class="card">
+      <div class="card-header"><div class="icon">🍽️</div><h2 id="t-food">Host's Food Picks</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">Handpicked by the host based on personal favorites 😋 · Continuously updated!</p>
+          <ul class="food-list">
+            <li><strong>덕이 손만두집</strong> (Handmade Dumplings)<div class="food-addr">📍 Hapjeong-dong 393-14 · 11:00–22:00 (Break 15:00–17:00)</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Slightly press dumplings with a spoon & add soy sauce to enjoy the broth. Try with the radish side dish!</div></li>
+            <li><strong>합정옥</strong> (Hapjeong-ok Gom-tang)<div class="food-addr">📍 Hapjeong-dong 392-3 · 11:00–22:00 · <span class="hl-accent">Michelin Guide 5 consecutive years 🌟</span></div><div class="food-note">Clean beef bone broth. Best with radish kimchi. Order large or add boiled pork for bigger appetite!</div></li>
+            <li><strong>금문 중화요리</strong> (Geummun Chinese)<div class="food-addr">📍 Worldcup-ro 1-gil 14 · Open 24 hrs</div><div class="food-note">Refreshing spicy seafood noodle soup! Order dry black bean noodles + fried egg. Groups must get sweet & sour pork. Free pan-fried dumplings!</div></li>
+            <li><strong>합정고깃집</strong> (Hapjeong BBQ)<div class="food-addr">📍 Yanghwa-ro 1-gil 21 · Mon–Fri 16:00–24:00, Sat 15:00–24:00, Sun closed</div><div class="food-note">Real local gem — even TV producers queue up here! Host recommends Assorted Set B.</div></li>
+            <li><strong>각시보쌈</strong> (Gaksi Bossam)<div class="food-addr">📍 Sungji-gil 25 · 11:00–22:00 (Break 15:00–16:30) · Expect a wait!</div><div class="food-note">Order half-and-half to taste both kimchi & cabbage wraps. Add rice → get free tuna stew!</div></li>
+            <li><strong>함반</strong> (Hamban Hambagu)<div class="food-addr">📍 Hapjeong-dong 393-11 · 11:30–21:00 (Break 15:00–17:00) · Reserve on CatchTable</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Charcoal-grilled hambagu. Try with shiitake-wasabi or Sichuan sauce. Great with beer or yuzu sour!</div></li>
+          </ul>
+          <div class="section-subtitle" style="margin-top:18px">☕ Cafes &amp; Brunch</div>
+          <ul class="food-list">
+            <li><strong>빌렛 망원</strong> (Billet Mangwon)<div class="food-addr">📍 Mangwon-dong 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">NYC-style fluffy pancakes. Pair with cherry tomato pasta for the perfect brunch!</div></li>
+            <li><strong>오베이글하우스</strong> (O Bagel House)<div class="food-addr">📍 Hapjeong-dong 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Australian-style bagels, fully customizable. A local favorite among foreigners too!</div></li>
+          </ul>
+        </div>
+        <div data-lang="ko">
+          <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">호스트의 지극히 개인적인 취향 😋 · 계속 업데이트 중!</p>
+          <ul class="food-list">
+            <li><strong>덕이 손만두집</strong><div class="food-addr">📍 합정동 393-14 · 11:00–22:00 (break 15:00–17:00)</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">만두전골은 숟가락으로 살짝 터뜨려 간장 넣어 육즙과 함께. 무말랭이 밑반찬도 강추!</div></li>
+            <li><strong>합정옥</strong><div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">미쉐린 5년 연속 선정 🌟</span></div><div class="food-note">군더더기 없는 깔끔한 곰탕. 무김치랑 드세요. 양이 부족하면 특 사이즈 or 수육 추가!</div></li>
+            <li><strong>금문 중화요리</strong><div class="food-addr">📍 월드컵로1길 14 · 24시간</div><div class="sight-map"><div id="map_geummun_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">짬뽕 시원하고 짜장은 간짜장+계란후라이! 여럿이면 탕수육 필수. 군만두 서비스!</div></li>
+            <li><strong>합정고깃집</strong><div class="food-addr">📍 양화로1길 21 · 월–금 16:00–24:00, 토 15:00–24:00, 일 휴무</div><div class="sight-map"><div id="map_bbq_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">진짜 로컬 맛집, 방송국 PD들도 줄 서는 곳! 모듬B세트 추천.</div></li>
+            <li><strong>각시보쌈</strong><div class="food-addr">📍 성지길 25 · 11:00–22:00 (break 15:00–16:30) · 웨이팅 필수</div><div class="sight-map"><div id="map_gaksi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">반반보쌈으로 김치·배추 둘 다 맛보기. 공기밥 주문 시 참치찌개 서비스!</div></li>
+            <li><strong>함반</strong><div class="food-addr">📍 합정동 393-11 · 11:30–21:00 (break 15:00–17:00) · 캐치테이블 예약</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">숯불 함바그. 표고와사비+사천풍 소스 조합 추천. 맥주/유자사와/하이볼과 함께!</div></li>
+          </ul>
+          <div class="section-subtitle" style="margin-top:18px">☕ 카페 &amp; 브런치</div>
+          <ul class="food-list">
+            <li><strong>빌렛 망원</strong><div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">뉴욕 스타일 팬케이크 러버라면 필수! 체리토마토 파스타도 함께.</div></li>
+            <li><strong>오베이글하우스</strong><div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">호주식 베이글. 원하는 빵+크림치즈 커스텀. 근처 외국인들도 자주 찾는 곳!</div></li>
+          </ul>
+        </div>
+        <div data-lang="zh">
+          <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">房东精选私藏美食 😋 · 持续更新中！</p>
+          <ul class="food-list">
+            <li><strong>덕이 손만두집</strong>（手工饺子店）<div class="food-addr">📍 합정동 393-14 · 11:00–22:00（休息 15:00–17:00）</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">用勺子轻轻戳破饺子，加几滴酱油享用浓郁汤汁。萝卜干小菜也很赞！</div></li>
+            <li><strong>합정옥</strong>（合井玉牛骨汤）<div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">米其林连续5年入选 🌟</span></div><div class="food-note">清淡精致的牛骨汤，配萝卜泡菜最佳。份量不够可选大碗或加白切肉！</div></li>
+            <li><strong>금문 중화요리</strong>（金门中华料理）<div class="food-addr">📍 월드컵로1길 14 · 24小时</div><div class="sight-map"><div id="map_geummun_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">辣海鲜汤清爽！炸酱面选干拌+煎蛋。多人必点糖醋肉，附赠锅贴！</div></li>
+            <li><strong>합정고깃집</strong>（合井烤肉）<div class="food-addr">📍 양화로1길 21 · 周一至五 16:00–24:00，周六 15:00–24:00，周日休息</div><div class="sight-map"><div id="map_bbq_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">正宗本地人气店！推荐综合B套餐。</div></li>
+            <li><strong>각시보쌈</strong>（各氏包肉）<div class="food-addr">📍 성지길 25 · 11:00–22:00（休息 15:00–16:30）· 需排队</div><div class="sight-map"><div id="map_gaksi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">点半半包肉，可同时品尝泡菜和白菜两种口味。加白饭即送金枪鱼汤！</div></li>
+            <li><strong>함반</strong>（Hamban 汉堡排）<div class="food-addr">📍 합정동 393-11 · 11:30–21:00（休息 15:00–17:00）· CatchTable预约</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">炭火汉堡排，推荐香菇山葵+四川风味酱。配啤酒/柚子沙瓦更美味！</div></li>
+          </ul>
+          <div class="section-subtitle" style="margin-top:18px">☕ 咖啡 &amp; 早午餐</div>
+          <ul class="food-list">
+            <li><strong>빌렛 망원</strong>（Billet Mangwon）<div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">纽约风厚松饼，配樱桃番茄意面绝配！</div></li>
+            <li><strong>오베이글하우스</strong>（O贝果屋）<div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">澳式贝果，可自由搭配奶油芝士。附近外国人也超爱！</div></li>
+          </ul>
+        </div>
+        <div data-lang="ja">
+          <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">ホストが個人的に選んだおすすめ 😋 · 随時更新中！</p>
+          <ul class="food-list">
+            <li><strong>덕이 손만두집</strong>（手作り餃子専門店）<div class="food-addr">📍 합정동 393-14 · 11:00–22:00（休憩 15:00–17:00）</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">スプーンで少し割って醤油を加えると旨みが広がります。大根の干物の副菜も絶品！</div></li>
+            <li><strong>합정옥</strong>（合井玉 コムタン）<div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">ミシュラン5年連続掲載 🌟</span></div><div class="food-note">すっきりとした牛骨スープ。大根キムチと合わせて。物足りない方は大盛りかゆで豚肉を追加！</div></li>
+            <li><strong>금문 중화요리</strong>（金門 中華料理）<div class="food-addr">📍 월드컵로1길 14 · 24時間営業</div><div class="sight-map"><div id="map_geummun_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">さっぱりピリ辛の海鮮ラーメンが絶品！汁なしチャジャン＋目玉焼きで。グループなら酢豚必須、餃子はサービス！</div></li>
+            <li><strong>합정고깃집</strong>（合井 焼肉店）<div class="food-addr">📍 양화로1길 21 · 月〜金 16:00–24:00、土 15:00–24:00、日曜休</div><div class="sight-map"><div id="map_bbq_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">テレビ局のPDも並ぶ本物のローカル名店！アソートセットBがおすすめ。</div></li>
+            <li><strong>각시보쌈</strong>（カクシ ポッサム）<div class="food-addr">📍 성지길 25 · 11:00–22:00（休憩 15:00–16:30）· 並び必須</div><div class="sight-map"><div id="map_gaksi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">ハーフ＆ハーフで2種の包み野菜を楽しんで。ご飯追加でツナ鍋がサービスに！</div></li>
+            <li><strong>함반</strong>（ハンバン ハンバーグ）<div class="food-addr">📍 합정동 393-11 · 11:30–21:00（休憩 15:00–17:00）· CatchTableで予約を</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">炭火ハンバーグ。椎茸わさび＋四川風ソースがおすすめ。ビール・ゆずサワーと合わせて！</div></li>
+          </ul>
+          <div class="section-subtitle" style="margin-top:18px">☕ カフェ &amp; ブランチ</div>
+          <ul class="food-list">
+            <li><strong>빌렛 망원</strong>（Billet 望遠）<div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">NYスタイルのふわふわパンケーキ。チェリートマトパスタとのセットがおすすめ！</div></li>
+            <li><strong>오베이글하우스</strong>（O ベーグルハウス）<div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">オーストラリア風ベーグル。好みでカスタム可。近くの外国人にも大人気！</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑧ SIGHTS -->
+    <div class="card">
+      <div class="card-header"><div class="icon">🗺️</div><h2 id="t-sights">Local Attractions</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <div class="sight-list">
+            <div class="sight-item"><div class="sight-name">🛍️ Mangwon Market (망원시장)</div><p>A vibrant traditional market full of local street food at affordable prices. A great way to experience authentic daily Seoul life.</p><div class="sight-map"><div id="map_sight_mangwon_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 Hongdae (홍대)</div><p>A buzzing area known for youth culture, street art, live music, unique cafes, and trendy shops. The heart of Seoul's creative scene.</p><div class="sight-map"><div id="map_sight_hongdae_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 Gyeongbokgung Palace (경복궁)</div><p>Korea's most iconic 14th-century royal palace. Don't miss the royal guard changing ceremony at the main gate!</p><div class="sight-map"><div id="map_sight_gyeongbok_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 Mangwon Hangang Park (망원한강공원)</div><p>A relaxing riverside park perfect for picnics, bike rides, and watching the sunset over the Han River.</p><div class="sight-map"><div id="map_sight_hangang_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 Seonyudo Park (선유도공원)</div><p>An eco-friendly park on a former water treatment plant. Beautiful gardens, walking trails, and scenic photo spots.</p><div class="sight-map"><div id="map_sight_seonyudo_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YG Entertainment (YG 엔터테인먼트)</div><p>Home to famous K-pop stars. A must-visit for K-pop fans — you might catch a glimpse of your favorite artist!</p><div class="sight-map"><div id="map_sight_yg_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+          </div>
+        </div>
+        <div data-lang="ko">
+          <div class="sight-list">
+            <div class="sight-item"><div class="sight-name">🛍️ 망원시장</div><p>합리적인 가격에 다양한 길거리 음식을 즐길 수 있는 활기찬 전통시장. 서울의 일상 문화를 가까이서 느낄 수 있어요.</p><div class="sight-map"><div id="map_sight_mangwon_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 홍대입구</div><p>젊은 문화, 버스킹, 독특한 카페와 감각적인 숍이 넘치는 핫플레이스. 서울 창작의 중심!</p><div class="sight-map"><div id="map_sight_hongdae_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 경복궁</div><p>14세기에 지어진 한국 대표 궁궐. 정문 앞 왕실 수문장 교대식도 꼭 보세요!</p><div class="sight-map"><div id="map_sight_gyeongbok_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 망원한강공원</div><p>한강변 피크닉, 자전거, 일몰 감상에 최적인 공원. 도심 속 힐링 공간.</p><div class="sight-map"><div id="map_sight_hangang_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 선유도공원</div><p>옛 정수장을 리모델링한 친환경 공원. 산책로와 아름다운 조경이 인상적이에요.</p><div class="sight-map"><div id="map_sight_seonyudo_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YG 엔터테인먼트</div><p>유명 K-POP 스타들의 소속사. K-POP 팬이라면 아티스트와 마주칠 수도!</p><div class="sight-map"><div id="map_sight_yg_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+          </div>
+        </div>
+        <div data-lang="zh">
+          <div class="sight-list">
+            <div class="sight-item"><div class="sight-name">🛍️ 望远市场（망원시장）</div><p>充满活力的传统集市，各种本地街头美食价格实惠。近距离体验首尔日常生活的好去处。</p><div class="sight-map"><div id="map_sight_mangwon_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 弘大（홍대）</div><p>年轻文化、街头艺术、现场演出、独特咖啡馆和潮流小店云集。首尔最有创意的街区！</p><div class="sight-map"><div id="map_sight_hongdae_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 景福宫（경복궁）</div><p>韩国最具代表性的14世纪王宫。别错过正门前的王室守卫换岗仪式！</p><div class="sight-map"><div id="map_sight_gyeongbok_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 望远汉江公园（망원한강공원）</div><p>汉江边的休闲公园，适合野餐、骑行和欣赏日落。城市中的悠闲天地。</p><div class="sight-map"><div id="map_sight_hangang_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 仙游岛公园（선유도공원）</div><p>以旧净水厂改建而成的生态公园，有美丽的园林和步行道，是绝佳拍照地点。</p><div class="sight-map"><div id="map_sight_seonyudo_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YG娱乐（YG 엔터테인먼트）</div><p>著名K-POP明星的所属公司。K-POP粉丝必打卡，说不定能偶遇爱豆～</p><div class="sight-map"><div id="map_sight_yg_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+          </div>
+        </div>
+        <div data-lang="ja">
+          <div class="sight-list">
+            <div class="sight-item"><div class="sight-name">🛍️ 望遠市場（망원시장）</div><p>リーズナブルなローカルフードが並ぶ活気ある伝統市場。ソウルの日常をリアルに体験できます。</p><div class="sight-map"><div id="map_sight_mangwon_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 弘大（홍대）</div><p>若者文化・ストリートアート・バスキング・個性的なカフェが集まるエリア。ソウルのクリエイティブな中心地！</p><div class="sight-map"><div id="map_sight_hongdae_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 景福宮（경복궁）</div><p>14世紀に建てられた韓国を代表する王宮。正門前の王室衛兵交代式も必見！</p><div class="sight-map"><div id="map_sight_gyeongbok_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 望遠漢江公園（망원한강공원）</div><p>ピクニック・サイクリング・日没鑑賞に最適な漢江沿いの公園。都心のオアシス。</p><div class="sight-map"><div id="map_sight_hangang_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 仙遊島公園（선유도공원）</div><p>旧水処理場を再整備した自然公園。美しい庭園と遊歩道が広がる写真映えスポット。</p><div class="sight-map"><div id="map_sight_seonyudo_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YGエンターテインメント（YG 엔터테인먼트）</div><p>有名K-POPアーティストの所属事務所。K-POPファン必訪スポット！</p><div class="sight-map"><div id="map_sight_yg_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑨ THANK YOU -->
+    <div class="card">
+      <div class="card-header"><div class="icon">💝</div><h2 id="t-thanks">Thank You for Staying</h2></div>
+      <div class="card-body">
+        <div data-lang="en" class="active">
+          <div class="thankyou-inner">
+            <p>Hello. I'm Mori, your host at "Haus, Komma." ☺️</p>
+            <p>If there was anything uncomfortable during your stay, please feel free to let me know, and I hope you leave with only good memories from Komma. 💗</p>
+            <p>By the way, I hope your time at Komma was a chance to relax from the fatigue of travel and take a comfortable break at your own pace. I'd love it if you could take a brief moment to share how your time at Komma was and what you enjoyed most.</p>
+            <p>Your precious perfect review gives me the strength to make "Komma" an even more loving and comfortable space.</p>
+            <p>I will continue to strive to be a host who makes Komma always a satisfying space.</p>
+            <p><strong>Thank you. 💝</strong></p>
+          </div>
+          <div class="thankyou-inner">
+            <p>안녕하세요. "Haus, Komma" 호스트 모리입니다. ☺️</p>
+            <p>혹여 불편한 사항이 있으셨다면 편하게 말씀주시고, Komma에서의 좋은 기억만 가져가세요 💗</p>
+            <p>아 참, Komma에서의 시간은 여행의 피로를 풀며, 편안하게 한 템포 쉬어가는 시간이 되셨을까요? Komma에서의 시간이 어땠는지 잠시 소중한 시간 내주셔서 어떤 점이 좋으셨는지 공유해주세요.</p>
+            <p>게스트님의 소중한 만점 후기는 저에게 "Komma"를 더욱 애정가득 편안한 공간으로 만들 수 있도록 하는 너무너무 큰 힘이 됩니다.</p>
+            <p>Komma가 언제나 만족스러운 공간이 될 수 있도록 더욱 노력하는 호스트가 되겠습니다.</p>
+            <p><strong>감사합니다. 💝</strong></p>
+          </div>
+        </div>
+        <div data-lang="ko">
+          <div class="thankyou-inner">
+            <p>안녕하세요. "Haus, Komma" 호스트 모리입니다. ☺️</p>
+            <p>혹여 불편한 사항이 있으셨다면 편하게 말씀주시고, Komma에서의 좋은 기억만 가져가세요 💗</p>
+            <p>아 참, Komma에서의 시간은 여행의 피로를 풀며, 편안하게 한 템포 쉬어가는 시간이 되셨을까요? Komma에서의 시간이 어땠는지 잠시 소중한 시간 내주셔서 어떤 점이 좋으셨는지 공유해주세요.</p>
+            <p>게스트님의 소중한 만점 후기는 저에게 "Komma"를 더욱 애정가득 편안한 공간으로 만들 수 있도록 하는 너무너무 큰 힘이 됩니다.</p>
+            <p>Komma가 언제나 만족스러운 공간이 될 수 있도록 더욱 노력하는 호스트가 되겠습니다.</p>
+            <p><strong>감사합니다. 💝</strong></p>
+          </div>
+        </div>
+        <div data-lang="zh">
+          <div class="thankyou-inner">
+            <p>您好。我是 "Haus, Komma" 的房东 Mori。☺️</p>
+            <p>如果入住期间有任何不便之处，请随时告知我，希望您只带走在 Komma 留下的美好回忆。💗</p>
+            <p>另外，不知道在 Komma 的时光，是否让您从旅途的疲惫中得到了放松、舒适地喘一口气呢？如果您能抽出片刻时间，分享一下在 Komma 的感受以及最喜欢的地方，我将非常感激。</p>
+            <p>您宝贵的满分好评，是我将 "Komma" 打造成更加充满爱意、舒适空间的巨大动力。</p>
+            <p>我会继续努力，让 Komma 始终成为令每位宾客满意的地方。</p>
+            <p><strong>感谢您的入住。💝</strong></p>
+          </div>
+        </div>
+        <div data-lang="ja">
+          <div class="thankyou-inner">
+            <p>こんにちは。"Haus, Komma" のホスト、モリです。☺️</p>
+            <p>ご滞在中に何かご不便な点がございましたら、遠慮なくお知らせください。Komma での良い思い出だけをお持ち帰りいただけたら嬉しいです。💗</p>
+            <p>旅の疲れを癒し、Komma でゆったりと一息ついていただけましたでしょうか？Komma での時間がいかがだったか、良かった点など、少しお時間をいただいてぜひ教えていただけますか。</p>
+            <p>皆様からの貴重な満点レビューは、"Komma" をさらに愛情あふれる、心地よい空間にするための大きな力となっています。</p>
+            <p>Komma がいつも満足していただける空間であり続けられるよう、ホストとして精進してまいります。</p>
+            <p><strong>ありがとうございました。💝</strong></p>
+          </div>
+        </div>
+              </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const TITLES = {
+  'en': { 'welcome':'Welcome','rules':'House Rules','checkin':'Check-In & Access','luggage':'Free Luggage Storage','devices':'Devices & Appliances','transport':'Transportation','food':"Host's Food Picks",'sights':'Local Attractions','thanks':'Thank You for Staying 👋' },
+  'ko': { 'welcome':'인사말','rules':'숙소 이용 수칙','checkin':'숙소 입실 안내','luggage':'무료 짐보관 서비스','devices':'전자기기 이용 안내','transport':'교통편','food':'호스트 맛집 추천','sights':'주변 관광하기','thanks':'감사합니다 👋' },
+  'zh': { 'welcome':'欢迎','rules':'住宿规则','checkin':'入住 & 门禁','luggage':'免费行李寄存','devices':'设备使用说明','transport':'交通指南','food':'房东美食推荐','sights':'周边景点','thanks':'感谢您的入住 👋' },
+  'ja': { 'welcome':'ようこそ','rules':'ハウスルール','checkin':'チェックイン & 入室','luggage':'無料荷物預かり','devices':'機器の使い方','transport':'交通案内','food':'ホストのおすすめグルメ','sights':'近隣の観光スポット','thanks':'ご滞在ありがとうございました 👋' }
+};
+const IDS = ['welcome','rules','checkin','luggage','devices','transport','food','sights','thanks'];
+
+function setLang(lang, btn) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.classList.toggle('active', el.dataset.lang === lang);
+  });
+  IDS.forEach(id => {
+    const el = document.getElementById('t-' + id);
+    if (el && TITLES[lang]) el.textContent = TITLES[lang][id] || '';
+  });
+}
+</script>
+<script>
+function initMap(id, lat, lon, zoom) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var map = L.map(id, { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false }).setView([lat, lon], zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+  L.marker([lat, lon]).addTo(map);
+}
+window.addEventListener('load', function() {
+  initMap('map_deogi_1', 37.549, 126.9073, 17);
+  initMap('map_hapjeongok_1', 37.5476, 126.9109, 17);
+  initMap('map_geummun_1', 37.56, 126.92, 17);
+  initMap('map_bbq_1', 37.5515, 126.916, 17);
+  initMap('map_gaksi_1', 37.5477, 126.913, 17);
+  initMap('map_hamban_1', 37.549, 126.9073, 17);
+  initMap('map_billet_1', 37.5563, 126.9045, 17);
+  initMap('map_obagel_1', 37.549, 126.908, 17);
+  initMap('map_sight_mangwon_1', 37.5563, 126.9047, 16);
+  initMap('map_sight_mangwon_2', 37.5563, 126.9047, 16);
+  initMap('map_sight_mangwon_3', 37.5563, 126.9047, 16);
+  initMap('map_sight_mangwon_4', 37.5563, 126.9047, 16);
+  initMap('map_sight_hongdae_1', 37.5574, 126.9245, 16);
+  initMap('map_sight_hongdae_2', 37.5574, 126.9245, 16);
+  initMap('map_sight_hongdae_3', 37.5574, 126.9245, 16);
+  initMap('map_sight_hongdae_4', 37.5574, 126.9245, 16);
+  initMap('map_sight_gyeongbok_1', 37.5796, 126.977, 16);
+  initMap('map_sight_gyeongbok_2', 37.5796, 126.977, 16);
+  initMap('map_sight_gyeongbok_3', 37.5796, 126.977, 16);
+  initMap('map_sight_gyeongbok_4', 37.5796, 126.977, 16);
+  initMap('map_sight_hangang_1', 37.5502, 126.8952, 15);
+  initMap('map_sight_hangang_2', 37.5502, 126.8952, 15);
+  initMap('map_sight_hangang_3', 37.5502, 126.8952, 15);
+  initMap('map_sight_hangang_4', 37.5502, 126.8952, 15);
+  initMap('map_sight_seonyudo_1', 37.5435, 126.882, 16);
+  initMap('map_sight_seonyudo_2', 37.5435, 126.882, 16);
+  initMap('map_sight_seonyudo_3', 37.5435, 126.882, 16);
+  initMap('map_sight_seonyudo_4', 37.5435, 126.882, 16);
+  initMap('map_sight_yg_1', 37.56, 126.927, 17);
+  initMap('map_sight_yg_2', 37.56, 126.927, 17);
+  initMap('map_sight_yg_3', 37.56, 126.927, 17);
+  initMap('map_sight_yg_4', 37.56, 126.927, 17);
+});
+</script>
+</body>
+</html>
