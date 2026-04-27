@@ -443,6 +443,15 @@
   .map-link:hover { background: #d0e3ff; }
   .sight-map { margin-top: 6px; }
 
+  .map-wrap { margin: 8px 0 4px; }
+  .map-embed { width:100%; height:150px; border-radius:8px; display:block; }
+  .map-open-link {
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:11px; color:#1045a0; text-decoration:none;
+    margin-top:3px; font-weight:500;
+  }
+  .map-open-link:hover { text-decoration:underline; }
+
   [data-lang] { display: none; }
   [data-lang].active { display: block; }
 </style>
@@ -1073,68 +1082,72 @@
     <div class="card">
       <div class="card-header"><div class="icon">🍽️</div><h2 id="t-food">Host's Food Picks</h2></div>
       <div class="card-body">
+
         <div data-lang="en" class="active">
           <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">Handpicked by the host based on personal favorites 😋 · Continuously updated!</p>
           <ul class="food-list">
-            <li><strong>덕이 손만두집</strong> (Handmade Dumplings)<div class="food-addr">📍 Hapjeong-dong 393-14 · 11:00–22:00 (Break 15:00–17:00)</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Slightly press dumplings with a spoon & add soy sauce to enjoy the broth. Try with the radish side dish!</div></li>
-            <li><strong>합정옥</strong> (Hapjeong-ok Gom-tang)<div class="food-addr">📍 Hapjeong-dong 392-3 · 11:00–22:00 · <span class="hl-accent">Michelin Guide 5 consecutive years 🌟</span></div><div class="food-note">Clean beef bone broth. Best with radish kimchi. Order large or add boiled pork for bigger appetite!</div></li>
-            <li><strong>금문 중화요리</strong> (Geummun Chinese)<div class="food-addr">📍 Worldcup-ro 1-gil 14 · Open 24 hrs</div><div class="food-note">Refreshing spicy seafood noodle soup! Order dry black bean noodles + fried egg. Groups must get sweet & sour pork. Free pan-fried dumplings!</div></li>
-            <li><strong>합정고깃집</strong> (Hapjeong BBQ)<div class="food-addr">📍 Yanghwa-ro 1-gil 21 · Mon–Fri 16:00–24:00, Sat 15:00–24:00, Sun closed</div><div class="food-note">Real local gem — even TV producers queue up here! Host recommends Assorted Set B.</div></li>
-            <li><strong>각시보쌈</strong> (Gaksi Bossam)<div class="food-addr">📍 Sungji-gil 25 · 11:00–22:00 (Break 15:00–16:30) · Expect a wait!</div><div class="food-note">Order half-and-half to taste both kimchi & cabbage wraps. Add rice → get free tuna stew!</div></li>
-            <li><strong>함반</strong> (Hamban Hambagu)<div class="food-addr">📍 Hapjeong-dong 393-11 · 11:30–21:00 (Break 15:00–17:00) · Reserve on CatchTable</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Charcoal-grilled hambagu. Try with shiitake-wasabi or Sichuan sauce. Great with beer or yuzu sour!</div></li>
+            <li><strong>덕이 손만두집 (Handmade Dumplings)</strong><div class="food-addr">📍 Hapjeong-dong 393-14 · 11:00–22:00 (Break 15:00–17:00)</div><div class="map-wrap"><div id="gmap1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Slightly press dumplings with a spoon &amp; add soy sauce to enjoy the broth. Try with the radish side dish!</div></li>
+            <li><strong>합정옥 (Hapjeong-ok Gom-tang)</strong><div class="food-addr">📍 Hapjeong-dong 392-3 · 11:00–22:00 · <span class="hl-accent">Michelin Guide 5 consecutive years 🌟</span></div><div class="map-wrap"><div id="gmap2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정옥+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Clean beef bone broth. Best with radish kimchi. Order large or add boiled pork for bigger appetite!</div></li>
+            <li><strong>금문 중화요리 (Geummun Chinese)</strong><div class="food-addr">📍 Worldcup-ro 1-gil 14 · Open 24 hrs</div><div class="map-wrap"><div id="gmap3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Refreshing spicy seafood noodle soup! Order dry black bean noodles + fried egg. Groups must get sweet &amp; sour pork. Free pan-fried dumplings!</div></li>
+            <li><strong>합정고깃집 (Hapjeong BBQ)</strong><div class="food-addr">📍 Yanghwa-ro 1-gil 21 · Mon–Fri 16:00–24:00, Sat 15:00–24:00, Sun closed</div><div class="map-wrap"><div id="gmap4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Real local gem — even TV producers queue up here! Host recommends Assorted Set B.</div></li>
+            <li><strong>각시보쌈 (Gaksi Bossam)</strong><div class="food-addr">📍 Sungji-gil 25 · 11:00–22:00 (Break 15:00–16:30) · Expect a wait!</div><div class="map-wrap"><div id="gmap5" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Order half-and-half to taste both kimchi &amp; cabbage wraps. Add rice → get free tuna stew!</div></li>
+            <li><strong>함반 (Hamban Hambagu)</strong><div class="food-addr">📍 Hapjeong-dong 393-11 · 11:30–21:00 (Break 15:00–17:00) · Reserve on CatchTable</div><div class="map-wrap"><div id="gmap6" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Charcoal-grilled hambagu. Try with shiitake-wasabi or Sichuan sauce. Great with beer or yuzu sour!</div></li>
           </ul>
           <div class="section-subtitle" style="margin-top:18px">☕ Cafes &amp; Brunch</div>
           <ul class="food-list">
-            <li><strong>빌렛 망원</strong> (Billet Mangwon)<div class="food-addr">📍 Mangwon-dong 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">NYC-style fluffy pancakes. Pair with cherry tomato pasta for the perfect brunch!</div></li>
-            <li><strong>오베이글하우스</strong> (O Bagel House)<div class="food-addr">📍 Hapjeong-dong 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Australian-style bagels, fully customizable. A local favorite among foreigners too!</div></li>
+            <li><strong>빌렛 망원 (Billet Mangwon)</strong><div class="food-addr">📍 Mangwon-dong 405-23 · 10:00–18:00</div><div class="map-wrap"><div id="gmap7" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">NYC-style fluffy pancakes. Pair with cherry tomato pasta for the perfect brunch!</div></li>
+            <li><strong>오베이글하우스 (O Bagel House)</strong><div class="food-addr">📍 Hapjeong-dong 431-21 · 10:00–19:00</div><div class="map-wrap"><div id="gmap8" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">Australian-style bagels, fully customizable. A local favorite among foreigners too!</div></li>
           </ul>
         </div>
+
         <div data-lang="ko">
           <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">호스트의 지극히 개인적인 취향 😋 · 계속 업데이트 중!</p>
           <ul class="food-list">
-            <li><strong>덕이 손만두집</strong><div class="food-addr">📍 합정동 393-14 · 11:00–22:00 (break 15:00–17:00)</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">만두전골은 숟가락으로 살짝 터뜨려 간장 넣어 육즙과 함께. 무말랭이 밑반찬도 강추!</div></li>
-            <li><strong>합정옥</strong><div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">미쉐린 5년 연속 선정 🌟</span></div><div class="food-note">군더더기 없는 깔끔한 곰탕. 무김치랑 드세요. 양이 부족하면 특 사이즈 or 수육 추가!</div></li>
-            <li><strong>금문 중화요리</strong><div class="food-addr">📍 월드컵로1길 14 · 24시간</div><div class="sight-map"><div id="map_geummun_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">짬뽕 시원하고 짜장은 간짜장+계란후라이! 여럿이면 탕수육 필수. 군만두 서비스!</div></li>
-            <li><strong>합정고깃집</strong><div class="food-addr">📍 양화로1길 21 · 월–금 16:00–24:00, 토 15:00–24:00, 일 휴무</div><div class="sight-map"><div id="map_bbq_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">진짜 로컬 맛집, 방송국 PD들도 줄 서는 곳! 모듬B세트 추천.</div></li>
-            <li><strong>각시보쌈</strong><div class="food-addr">📍 성지길 25 · 11:00–22:00 (break 15:00–16:30) · 웨이팅 필수</div><div class="sight-map"><div id="map_gaksi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">반반보쌈으로 김치·배추 둘 다 맛보기. 공기밥 주문 시 참치찌개 서비스!</div></li>
-            <li><strong>함반</strong><div class="food-addr">📍 합정동 393-11 · 11:30–21:00 (break 15:00–17:00) · 캐치테이블 예약</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">숯불 함바그. 표고와사비+사천풍 소스 조합 추천. 맥주/유자사와/하이볼과 함께!</div></li>
+            <li><strong>덕이 손만두집</strong><div class="food-addr">📍 합정동 393-14 · 11:00–22:00 (break 15:00–17:00)</div><div class="map-wrap"><div id="gmap9" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">만두전골은 숟가락으로 살짝 터뜨려 간장 넣어 육즙과 함께. 무말랭이 밑반찬도 강추!</div></li>
+            <li><strong>합정옥</strong><div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">미쉐린 5년 연속 선정 🌟</span></div><div class="map-wrap"><div id="gmap10" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정옥+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">군더더기 없는 깔끔한 곰탕. 무김치랑 드세요. 양이 부족하면 특 사이즈 or 수육 추가!</div></li>
+            <li><strong>금문 중화요리</strong><div class="food-addr">📍 월드컵로1길 14 · 24시간</div><div class="map-wrap"><div id="gmap11" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">짬뽕 시원하고 짜장은 간짜장+계란후라이! 여럿이면 탕수육 필수. 군만두 서비스!</div></li>
+            <li><strong>합정고깃집</strong><div class="food-addr">📍 양화로1길 21 · 월–금 16:00–24:00, 토 15:00–24:00, 일 휴무</div><div class="map-wrap"><div id="gmap12" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">진짜 로컬 맛집, 방송국 PD들도 줄 서는 곳! 모듬B세트 추천.</div></li>
+            <li><strong>각시보쌈</strong><div class="food-addr">📍 성지길 25 · 11:00–22:00 (break 15:00–16:30) · 웨이팅 필수</div><div class="map-wrap"><div id="gmap13" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">반반보쌈으로 김치·배추 둘 다 맛보기. 공기밥 주문 시 참치찌개 서비스!</div></li>
+            <li><strong>함반</strong><div class="food-addr">📍 합정동 393-11 · 11:30–21:00 (break 15:00–17:00) · 캐치테이블 예약</div><div class="map-wrap"><div id="gmap14" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">숯불 함바그. 표고와사비+사천풍 소스 조합 추천. 맥주/유자사와/하이볼과 함께!</div></li>
           </ul>
           <div class="section-subtitle" style="margin-top:18px">☕ 카페 &amp; 브런치</div>
           <ul class="food-list">
-            <li><strong>빌렛 망원</strong><div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">뉴욕 스타일 팬케이크 러버라면 필수! 체리토마토 파스타도 함께.</div></li>
-            <li><strong>오베이글하우스</strong><div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">호주식 베이글. 원하는 빵+크림치즈 커스텀. 근처 외국인들도 자주 찾는 곳!</div></li>
+            <li><strong>빌렛 망원</strong><div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="map-wrap"><div id="gmap15" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">뉴욕 스타일 팬케이크 러버라면 필수! 체리토마토 파스타도 함께.</div></li>
+            <li><strong>오베이글하우스</strong><div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="map-wrap"><div id="gmap16" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">호주식 베이글. 원하는 빵+크림치즈 커스텀. 근처 외국인들도 자주 찾는 곳!</div></li>
           </ul>
         </div>
+
         <div data-lang="zh">
           <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">房东精选私藏美食 😋 · 持续更新中！</p>
           <ul class="food-list">
-            <li><strong>덕이 손만두집</strong>（手工饺子店）<div class="food-addr">📍 합정동 393-14 · 11:00–22:00（休息 15:00–17:00）</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">用勺子轻轻戳破饺子，加几滴酱油享用浓郁汤汁。萝卜干小菜也很赞！</div></li>
-            <li><strong>합정옥</strong>（合井玉牛骨汤）<div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">米其林连续5年入选 🌟</span></div><div class="food-note">清淡精致的牛骨汤，配萝卜泡菜最佳。份量不够可选大碗或加白切肉！</div></li>
-            <li><strong>금문 중화요리</strong>（金门中华料理）<div class="food-addr">📍 월드컵로1길 14 · 24小时</div><div class="sight-map"><div id="map_geummun_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">辣海鲜汤清爽！炸酱面选干拌+煎蛋。多人必点糖醋肉，附赠锅贴！</div></li>
-            <li><strong>합정고깃집</strong>（合井烤肉）<div class="food-addr">📍 양화로1길 21 · 周一至五 16:00–24:00，周六 15:00–24:00，周日休息</div><div class="sight-map"><div id="map_bbq_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">正宗本地人气店！推荐综合B套餐。</div></li>
-            <li><strong>각시보쌈</strong>（各氏包肉）<div class="food-addr">📍 성지길 25 · 11:00–22:00（休息 15:00–16:30）· 需排队</div><div class="sight-map"><div id="map_gaksi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">点半半包肉，可同时品尝泡菜和白菜两种口味。加白饭即送金枪鱼汤！</div></li>
-            <li><strong>함반</strong>（Hamban 汉堡排）<div class="food-addr">📍 합정동 393-11 · 11:30–21:00（休息 15:00–17:00）· CatchTable预约</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">炭火汉堡排，推荐香菇山葵+四川风味酱。配啤酒/柚子沙瓦更美味！</div></li>
+            <li><strong>덕이 손만두집（手工饺子店）</strong><div class="food-addr">📍 합정동 393-14 · 11:00–22:00（休息 15:00–17:00）</div><div class="map-wrap"><div id="gmap17" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">用勺子轻轻戳破饺子，加几滴酱油享用浓郁汤汁。萝卜干小菜也很赞！</div></li>
+            <li><strong>합정옥（合井玉牛骨汤）</strong><div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">米其林连续5年入选 🌟</span></div><div class="map-wrap"><div id="gmap18" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정옥+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">清淡精致的牛骨汤，配萝卜泡菜最佳。份量不够可选大碗或加白切肉！</div></li>
+            <li><strong>금문 중화요리（金门中华料理）</strong><div class="food-addr">📍 월드컵로1길 14 · 24小时</div><div class="map-wrap"><div id="gmap19" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">辣海鲜汤清爽！炸酱面选干拌+煎蛋。多人必点糖醋肉，附赠锅贴！</div></li>
+            <li><strong>합정고깃집（合井烤肉）</strong><div class="food-addr">📍 양화로1길 21 · 周一至五 16:00–24:00，周六 15:00–24:00，周日休息</div><div class="map-wrap"><div id="gmap20" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">正宗本地人气店！推荐综合B套餐。</div></li>
+            <li><strong>각시보쌈（各氏包肉）</strong><div class="food-addr">📍 성지길 25 · 11:00–22:00（休息 15:00–16:30）· 需排队</div><div class="map-wrap"><div id="gmap21" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">点半半包肉，可同时品尝泡菜和白菜两种口味。加白饭即送金枪鱼汤！</div></li>
+            <li><strong>함반（Hamban 汉堡排）</strong><div class="food-addr">📍 합정동 393-11 · 11:30–21:00（休息 15:00–17:00）· CatchTable预约</div><div class="map-wrap"><div id="gmap22" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">炭火汉堡排，推荐香菇山葵+四川风味酱。配啤酒/柚子沙瓦更美味！</div></li>
           </ul>
           <div class="section-subtitle" style="margin-top:18px">☕ 咖啡 &amp; 早午餐</div>
           <ul class="food-list">
-            <li><strong>빌렛 망원</strong>（Billet Mangwon）<div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">纽约风厚松饼，配樱桃番茄意面绝配！</div></li>
-            <li><strong>오베이글하우스</strong>（O贝果屋）<div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">澳式贝果，可自由搭配奶油芝士。附近外国人也超爱！</div></li>
+            <li><strong>빌렛 망원（Billet Mangwon）</strong><div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="map-wrap"><div id="gmap23" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">纽约风厚松饼，配樱桃番茄意面绝配！</div></li>
+            <li><strong>오베이글하우스（O贝果屋）</strong><div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="map-wrap"><div id="gmap24" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">澳式贝果，可自由搭配奶油芝士。附近外国人也超爱！</div></li>
           </ul>
         </div>
+
         <div data-lang="ja">
           <p style="font-size:12px;color:var(--light-accent);margin-bottom:14px;font-style:italic">ホストが個人的に選んだおすすめ 😋 · 随時更新中！</p>
           <ul class="food-list">
-            <li><strong>덕이 손만두집</strong>（手作り餃子専門店）<div class="food-addr">📍 합정동 393-14 · 11:00–22:00（休憩 15:00–17:00）</div><div class="sight-map"><div id="map_deogi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">スプーンで少し割って醤油を加えると旨みが広がります。大根の干物の副菜も絶品！</div></li>
-            <li><strong>합정옥</strong>（合井玉 コムタン）<div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">ミシュラン5年連続掲載 🌟</span></div><div class="food-note">すっきりとした牛骨スープ。大根キムチと合わせて。物足りない方は大盛りかゆで豚肉を追加！</div></li>
-            <li><strong>금문 중화요리</strong>（金門 中華料理）<div class="food-addr">📍 월드컵로1길 14 · 24時間営業</div><div class="sight-map"><div id="map_geummun_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">さっぱりピリ辛の海鮮ラーメンが絶品！汁なしチャジャン＋目玉焼きで。グループなら酢豚必須、餃子はサービス！</div></li>
-            <li><strong>합정고깃집</strong>（合井 焼肉店）<div class="food-addr">📍 양화로1길 21 · 月〜金 16:00–24:00、土 15:00–24:00、日曜休</div><div class="sight-map"><div id="map_bbq_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">テレビ局のPDも並ぶ本物のローカル名店！アソートセットBがおすすめ。</div></li>
-            <li><strong>각시보쌈</strong>（カクシ ポッサム）<div class="food-addr">📍 성지길 25 · 11:00–22:00（休憩 15:00–16:30）· 並び必須</div><div class="sight-map"><div id="map_gaksi_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">ハーフ＆ハーフで2種の包み野菜を楽しんで。ご飯追加でツナ鍋がサービスに！</div></li>
-            <li><strong>함반</strong>（ハンバン ハンバーグ）<div class="food-addr">📍 합정동 393-11 · 11:30–21:00（休憩 15:00–17:00）· CatchTableで予約を</div><div class="sight-map"><div id="map_hamban_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">炭火ハンバーグ。椎茸わさび＋四川風ソースがおすすめ。ビール・ゆずサワーと合わせて！</div></li>
+            <li><strong>덕이 손만두집（手作り餃子専門店）</strong><div class="food-addr">📍 합정동 393-14 · 11:00–22:00（休憩 15:00–17:00）</div><div class="map-wrap"><div id="gmap25" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=덕이+손만두집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">スプーンで少し割って醤油を加えると旨みが広がります。大根の干物の副菜も絶品！</div></li>
+            <li><strong>합정옥（合井玉 コムタン）</strong><div class="food-addr">📍 합정동 392-3 · 11:00–22:00 · <span class="hl-accent">ミシュラン5年連続掲載 🌟</span></div><div class="map-wrap"><div id="gmap26" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정옥+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">すっきりとした牛骨スープ。大根キムチと合わせて。物足りない方は大盛りかゆで豚肉を追加！</div></li>
+            <li><strong>금문 중화요리（金門 中華料理）</strong><div class="food-addr">📍 월드컵로1길 14 · 24時間営業</div><div class="map-wrap"><div id="gmap27" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=금문+중화요리+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">さっぱりピリ辛の海鮮ラーメンが絶品！汁なしチャジャン＋目玉焼きで。グループなら酢豚必須、餃子はサービス！</div></li>
+            <li><strong>합정고깃집（合井 焼肉店）</strong><div class="food-addr">📍 양화로1길 21 · 月〜金 16:00–24:00、土 15:00–24:00、日曜休</div><div class="map-wrap"><div id="gmap28" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=합정고깃집+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">テレビ局のPDも並ぶ本物のローカル名店！アソートセットBがおすすめ。</div></li>
+            <li><strong>각시보쌈（カクシ ポッサム）</strong><div class="food-addr">📍 성지길 25 · 11:00–22:00（休憩 15:00–16:30）· 並び必須</div><div class="map-wrap"><div id="gmap29" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=각시보쌈+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">ハーフ＆ハーフで2種の包み野菜を楽しんで。ご飯追加でツナ鍋がサービスに！</div></li>
+            <li><strong>함반（ハンバン ハンバーグ）</strong><div class="food-addr">📍 합정동 393-11 · 11:30–21:00（休憩 15:00–17:00）· CatchTableで予約を</div><div class="map-wrap"><div id="gmap30" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=함반+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">炭火ハンバーグ。椎茸わさび＋四川風ソースがおすすめ。ビール・ゆずサワーと合わせて！</div></li>
           </ul>
           <div class="section-subtitle" style="margin-top:18px">☕ カフェ &amp; ブランチ</div>
           <ul class="food-list">
-            <li><strong>빌렛 망원</strong>（Billet 望遠）<div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="sight-map"><div id="map_billet_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">NYスタイルのふわふわパンケーキ。チェリートマトパスタとのセットがおすすめ！</div></li>
-            <li><strong>오베이글하우스</strong>（O ベーグルハウス）<div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="sight-map"><div id="map_obagel_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">オーストラリア風ベーグル。好みでカスタム可。近くの外国人にも大人気！</div></li>
+            <li><strong>빌렛 망원（Billet 望遠）</strong><div class="food-addr">📍 망원동 405-23 · 10:00–18:00</div><div class="map-wrap"><div id="gmap31" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=빌렛+망원+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">NYスタイルのふわふわパンケーキ。チェリートマトパスタとのセットがおすすめ！</div></li>
+            <li><strong>오베이글하우스（O ベーグルハウス）</strong><div class="food-addr">📍 합정동 431-21 · 10:00–19:00</div><div class="map-wrap"><div id="gmap32" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=오베이글하우스+서울+마포구" target="_blank">↗ Google Maps에서 열기</a></div><div class="food-note">オーストラリア風ベーグル。好みでカスタム可。近くの外国人にも大人気！</div></li>
           </ul>
         </div>
       </div>
@@ -1146,42 +1159,42 @@
       <div class="card-body">
         <div data-lang="en" class="active">
           <div class="sight-list">
-            <div class="sight-item"><div class="sight-name">🛍️ Mangwon Market (망원시장)</div><p>A vibrant traditional market full of local street food at affordable prices. A great way to experience authentic daily Seoul life.</p><div class="sight-map"><div id="map_sight_mangwon_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎨 Hongdae (홍대)</div><p>A buzzing area known for youth culture, street art, live music, unique cafes, and trendy shops. The heart of Seoul's creative scene.</p><div class="sight-map"><div id="map_sight_hongdae_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🏯 Gyeongbokgung Palace (경복궁)</div><p>Korea's most iconic 14th-century royal palace. Don't miss the royal guard changing ceremony at the main gate!</p><div class="sight-map"><div id="map_sight_gyeongbok_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🌳 Mangwon Hangang Park (망원한강공원)</div><p>A relaxing riverside park perfect for picnics, bike rides, and watching the sunset over the Han River.</p><div class="sight-map"><div id="map_sight_hangang_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🍃 Seonyudo Park (선유도공원)</div><p>An eco-friendly park on a former water treatment plant. Beautiful gardens, walking trails, and scenic photo spots.</p><div class="sight-map"><div id="map_sight_seonyudo_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎤 YG Entertainment (YG 엔터테인먼트)</div><p>Home to famous K-pop stars. A must-visit for K-pop fans — you might catch a glimpse of your favorite artist!</p><div class="sight-map"><div id="map_sight_yg_1" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🛍️ Mangwon Market (망원시장)</div><p>A vibrant traditional market full of local street food at affordable prices. A great way to experience authentic daily Seoul life.</p><div class="map-wrap"><div id="gmap33" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 Hongdae (홍대)</div><p>A buzzing area known for youth culture, street art, live music, unique cafes, and trendy shops. The heart of Seoul's creative scene.</p><div class="map-wrap"><div id="gmap34" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 Gyeongbokgung Palace (경복궁)</div><p>Korea's most iconic 14th-century royal palace. Don't miss the royal guard changing ceremony at the main gate!</p><div class="map-wrap"><div id="gmap35" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 Mangwon Hangang Park (망원한강공원)</div><p>A relaxing riverside park perfect for picnics, bike rides, and watching the sunset over the Han River.</p><div class="map-wrap"><div id="gmap36" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 Seonyudo Park (선유도공원)</div><p>An eco-friendly park on a former water treatment plant. Beautiful gardens, walking trails, and scenic photo spots.</p><div class="map-wrap"><div id="gmap37" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YG Entertainment (YG 엔터테인먼트)</div><p>Home to famous K-pop stars. A must-visit for K-pop fans — you might catch a glimpse of your favorite artist!</p><div class="map-wrap"><div id="gmap38" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
           </div>
         </div>
         <div data-lang="ko">
           <div class="sight-list">
-            <div class="sight-item"><div class="sight-name">🛍️ 망원시장</div><p>합리적인 가격에 다양한 길거리 음식을 즐길 수 있는 활기찬 전통시장. 서울의 일상 문화를 가까이서 느낄 수 있어요.</p><div class="sight-map"><div id="map_sight_mangwon_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎨 홍대입구</div><p>젊은 문화, 버스킹, 독특한 카페와 감각적인 숍이 넘치는 핫플레이스. 서울 창작의 중심!</p><div class="sight-map"><div id="map_sight_hongdae_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🏯 경복궁</div><p>14세기에 지어진 한국 대표 궁궐. 정문 앞 왕실 수문장 교대식도 꼭 보세요!</p><div class="sight-map"><div id="map_sight_gyeongbok_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🌳 망원한강공원</div><p>한강변 피크닉, 자전거, 일몰 감상에 최적인 공원. 도심 속 힐링 공간.</p><div class="sight-map"><div id="map_sight_hangang_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🍃 선유도공원</div><p>옛 정수장을 리모델링한 친환경 공원. 산책로와 아름다운 조경이 인상적이에요.</p><div class="sight-map"><div id="map_sight_seonyudo_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎤 YG 엔터테인먼트</div><p>유명 K-POP 스타들의 소속사. K-POP 팬이라면 아티스트와 마주칠 수도!</p><div class="sight-map"><div id="map_sight_yg_2" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🛍️ 망원시장</div><p>합리적인 가격에 다양한 길거리 음식을 즐길 수 있는 활기찬 전통시장. 서울의 일상 문화를 가까이서 느낄 수 있어요.</p><div class="map-wrap"><div id="gmap39" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 홍대입구</div><p>젊은 문화, 버스킹, 독특한 카페와 감각적인 숍이 넘치는 핫플레이스. 서울 창작의 중심!</p><div class="map-wrap"><div id="gmap40" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 경복궁</div><p>14세기에 지어진 한국 대표 궁궐. 정문 앞 왕실 수문장 교대식도 꼭 보세요!</p><div class="map-wrap"><div id="gmap41" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 망원한강공원</div><p>한강변 피크닉, 자전거, 일몰 감상에 최적인 공원. 도심 속 힐링 공간.</p><div class="map-wrap"><div id="gmap42" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 선유도공원</div><p>옛 정수장을 리모델링한 친환경 공원. 산책로와 아름다운 조경이 인상적이에요.</p><div class="map-wrap"><div id="gmap43" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YG 엔터테인먼트</div><p>유명 K-POP 스타들의 소속사. K-POP 팬이라면 아티스트와 마주칠 수도!</p><div class="map-wrap"><div id="gmap44" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
           </div>
         </div>
         <div data-lang="zh">
           <div class="sight-list">
-            <div class="sight-item"><div class="sight-name">🛍️ 望远市场（망원시장）</div><p>充满活力的传统集市，各种本地街头美食价格实惠。近距离体验首尔日常生活的好去处。</p><div class="sight-map"><div id="map_sight_mangwon_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎨 弘大（홍대）</div><p>年轻文化、街头艺术、现场演出、独特咖啡馆和潮流小店云集。首尔最有创意的街区！</p><div class="sight-map"><div id="map_sight_hongdae_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🏯 景福宫（경복궁）</div><p>韩国最具代表性的14世纪王宫。别错过正门前的王室守卫换岗仪式！</p><div class="sight-map"><div id="map_sight_gyeongbok_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🌳 望远汉江公园（망원한강공원）</div><p>汉江边的休闲公园，适合野餐、骑行和欣赏日落。城市中的悠闲天地。</p><div class="sight-map"><div id="map_sight_hangang_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🍃 仙游岛公园（선유도공원）</div><p>以旧净水厂改建而成的生态公园，有美丽的园林和步行道，是绝佳拍照地点。</p><div class="sight-map"><div id="map_sight_seonyudo_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎤 YG娱乐（YG 엔터테인먼트）</div><p>著名K-POP明星的所属公司。K-POP粉丝必打卡，说不定能偶遇爱豆～</p><div class="sight-map"><div id="map_sight_yg_3" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🛍️ 望远市场（망원시장）</div><p>充满活力的传统集市，各种本地街头美食价格实惠。近距离体验首尔日常生活的好去处。</p><div class="map-wrap"><div id="gmap45" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 弘大（홍대）</div><p>年轻文化、街头艺术、现场演出、独特咖啡馆和潮流小店云集。首尔最有创意的街区！</p><div class="map-wrap"><div id="gmap46" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 景福宫（경복궁）</div><p>韩国最具代表性的14世纪王宫。别错过正门前的王室守卫换岗仪式！</p><div class="map-wrap"><div id="gmap47" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 望远汉江公园（망원한강공원）</div><p>汉江边的休闲公园，适合野餐、骑行和欣赏日落。城市中的悠闲天地。</p><div class="map-wrap"><div id="gmap48" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 仙游岛公园（선유도공원）</div><p>以旧净水厂改建而成的生态公园，有美丽的园林和步行道，是绝佳拍照地点。</p><div class="map-wrap"><div id="gmap49" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YG娱乐（YG 엔터테인먼트）</div><p>著名K-POP明星的所属公司。K-POP粉丝必打卡，说不定能偶遇爱豆～</p><div class="map-wrap"><div id="gmap50" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
           </div>
         </div>
         <div data-lang="ja">
           <div class="sight-list">
-            <div class="sight-item"><div class="sight-name">🛍️ 望遠市場（망원시장）</div><p>リーズナブルなローカルフードが並ぶ活気ある伝統市場。ソウルの日常をリアルに体験できます。</p><div class="sight-map"><div id="map_sight_mangwon_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎨 弘大（홍대）</div><p>若者文化・ストリートアート・バスキング・個性的なカフェが集まるエリア。ソウルのクリエイティブな中心地！</p><div class="sight-map"><div id="map_sight_hongdae_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🏯 景福宮（경복궁）</div><p>14世紀に建てられた韓国を代表する王宮。正門前の王室衛兵交代式も必見！</p><div class="sight-map"><div id="map_sight_gyeongbok_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🌳 望遠漢江公園（망원한강공원）</div><p>ピクニック・サイクリング・日没鑑賞に最適な漢江沿いの公園。都心のオアシス。</p><div class="sight-map"><div id="map_sight_hangang_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🍃 仙遊島公園（선유도공원）</div><p>旧水処理場を再整備した自然公園。美しい庭園と遊歩道が広がる写真映えスポット。</p><div class="sight-map"><div id="map_sight_seonyudo_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
-            <div class="sight-item"><div class="sight-name">🎤 YGエンターテインメント（YG 엔터테인먼트）</div><p>有名K-POPアーティストの所属事務所。K-POPファン必訪スポット！</p><div class="sight-map"><div id="map_sight_yg_4" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🛍️ 望遠市場（망원시장）</div><p>リーズナブルなローカルフードが並ぶ活気ある伝統市場。ソウルの日常をリアルに体験できます。</p><div class="map-wrap"><div id="gmap51" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원시장+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎨 弘大（홍대）</div><p>若者文化・ストリートアート・バスキング・個性的なカフェが集まるエリア。ソウルのクリエイティブな中心地！</p><div class="map-wrap"><div id="gmap52" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=홍대입구역+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🏯 景福宮（경복궁）</div><p>14世紀に建てられた韓国を代表する王宮。正門前の王室衛兵交代式も必見！</p><div class="map-wrap"><div id="gmap53" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=경복궁+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🌳 望遠漢江公園（망원한강공원）</div><p>ピクニック・サイクリング・日没鑑賞に最適な漢江沿いの公園。都心のオアシス。</p><div class="map-wrap"><div id="gmap54" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=망원한강공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🍃 仙遊島公園（선유도공원）</div><p>旧水処理場を再整備した自然公園。美しい庭園と遊歩道が広がる写真映えスポット。</p><div class="map-wrap"><div id="gmap55" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=선유도공원+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
+            <div class="sight-item"><div class="sight-name">🎤 YGエンターテインメント（YG 엔터테인먼트）</div><p>有名K-POPアーティストの所属事務所。K-POPファン必訪スポット！</p><div class="map-wrap"><div id="gmap56" class="map-embed"></div><a class="map-open-link" href="https://www.google.com/maps/search/?api=1&query=YG엔터테인먼트+서울" target="_blank">↗ Google Maps에서 열기</a></div></div>
           </div>
         </div>
       </div>
@@ -1239,10 +1252,8 @@
             <p><strong>ありがとうございました。💝</strong></p>
           </div>
         </div>
-              </div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -1267,48 +1278,80 @@ function setLang(lang, btn) {
   });
 }
 </script>
+
 <script>
 function initMap(id, lat, lon, zoom) {
   var el = document.getElementById(id);
   if (!el) return;
-  var map = L.map(id, { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false }).setView([lat, lon], zoom);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+  var map = L.map(id, {
+    zoomControl: false, attributionControl: false,
+    dragging: false, scrollWheelZoom: false,
+    touchZoom: false, doubleClickZoom: false
+  }).setView([lat, lon], zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19}).addTo(map);
   L.marker([lat, lon]).addTo(map);
 }
-window.addEventListener('load', function() {
-  initMap('map_deogi_1', 37.549, 126.9073, 17);
-  initMap('map_hapjeongok_1', 37.5476, 126.9109, 17);
-  initMap('map_geummun_1', 37.56, 126.92, 17);
-  initMap('map_bbq_1', 37.5515, 126.916, 17);
-  initMap('map_gaksi_1', 37.5477, 126.913, 17);
-  initMap('map_hamban_1', 37.549, 126.9073, 17);
-  initMap('map_billet_1', 37.5563, 126.9045, 17);
-  initMap('map_obagel_1', 37.549, 126.908, 17);
-  initMap('map_sight_mangwon_1', 37.5563, 126.9047, 16);
-  initMap('map_sight_mangwon_2', 37.5563, 126.9047, 16);
-  initMap('map_sight_mangwon_3', 37.5563, 126.9047, 16);
-  initMap('map_sight_mangwon_4', 37.5563, 126.9047, 16);
-  initMap('map_sight_hongdae_1', 37.5574, 126.9245, 16);
-  initMap('map_sight_hongdae_2', 37.5574, 126.9245, 16);
-  initMap('map_sight_hongdae_3', 37.5574, 126.9245, 16);
-  initMap('map_sight_hongdae_4', 37.5574, 126.9245, 16);
-  initMap('map_sight_gyeongbok_1', 37.5796, 126.977, 16);
-  initMap('map_sight_gyeongbok_2', 37.5796, 126.977, 16);
-  initMap('map_sight_gyeongbok_3', 37.5796, 126.977, 16);
-  initMap('map_sight_gyeongbok_4', 37.5796, 126.977, 16);
-  initMap('map_sight_hangang_1', 37.5502, 126.8952, 15);
-  initMap('map_sight_hangang_2', 37.5502, 126.8952, 15);
-  initMap('map_sight_hangang_3', 37.5502, 126.8952, 15);
-  initMap('map_sight_hangang_4', 37.5502, 126.8952, 15);
-  initMap('map_sight_seonyudo_1', 37.5435, 126.882, 16);
-  initMap('map_sight_seonyudo_2', 37.5435, 126.882, 16);
-  initMap('map_sight_seonyudo_3', 37.5435, 126.882, 16);
-  initMap('map_sight_seonyudo_4', 37.5435, 126.882, 16);
-  initMap('map_sight_yg_1', 37.56, 126.927, 17);
-  initMap('map_sight_yg_2', 37.56, 126.927, 17);
-  initMap('map_sight_yg_3', 37.56, 126.927, 17);
-  initMap('map_sight_yg_4', 37.56, 126.927, 17);
-});
+function waitLeaflet() {
+  if (typeof L !== 'undefined' && L.map) {
+  initMap('gmap1', 37.549, 126.9073, 17);
+  initMap('gmap2', 37.5476, 126.9109, 17);
+  initMap('gmap3', 37.56, 126.92, 17);
+  initMap('gmap4', 37.5515, 126.916, 17);
+  initMap('gmap5', 37.5477, 126.913, 17);
+  initMap('gmap6', 37.549, 126.9073, 17);
+  initMap('gmap7', 37.5563, 126.9045, 17);
+  initMap('gmap8', 37.549, 126.908, 17);
+  initMap('gmap9', 37.549, 126.9073, 17);
+  initMap('gmap10', 37.5476, 126.9109, 17);
+  initMap('gmap11', 37.56, 126.92, 17);
+  initMap('gmap12', 37.5515, 126.916, 17);
+  initMap('gmap13', 37.5477, 126.913, 17);
+  initMap('gmap14', 37.549, 126.9073, 17);
+  initMap('gmap15', 37.5563, 126.9045, 17);
+  initMap('gmap16', 37.549, 126.908, 17);
+  initMap('gmap17', 37.549, 126.9073, 17);
+  initMap('gmap18', 37.5476, 126.9109, 17);
+  initMap('gmap19', 37.56, 126.92, 17);
+  initMap('gmap20', 37.5515, 126.916, 17);
+  initMap('gmap21', 37.5477, 126.913, 17);
+  initMap('gmap22', 37.549, 126.9073, 17);
+  initMap('gmap23', 37.5563, 126.9045, 17);
+  initMap('gmap24', 37.549, 126.908, 17);
+  initMap('gmap25', 37.549, 126.9073, 17);
+  initMap('gmap26', 37.5476, 126.9109, 17);
+  initMap('gmap27', 37.56, 126.92, 17);
+  initMap('gmap28', 37.5515, 126.916, 17);
+  initMap('gmap29', 37.5477, 126.913, 17);
+  initMap('gmap30', 37.549, 126.9073, 17);
+  initMap('gmap31', 37.5563, 126.9045, 17);
+  initMap('gmap32', 37.549, 126.908, 17);
+  initMap('gmap33', 37.5563, 126.9047, 16);
+  initMap('gmap34', 37.5574, 126.9245, 16);
+  initMap('gmap35', 37.5796, 126.977, 16);
+  initMap('gmap36', 37.5502, 126.8952, 15);
+  initMap('gmap37', 37.5435, 126.882, 16);
+  initMap('gmap38', 37.56, 126.927, 17);
+  initMap('gmap39', 37.5563, 126.9047, 16);
+  initMap('gmap40', 37.5574, 126.9245, 16);
+  initMap('gmap41', 37.5796, 126.977, 16);
+  initMap('gmap42', 37.5502, 126.8952, 15);
+  initMap('gmap43', 37.5435, 126.882, 16);
+  initMap('gmap44', 37.56, 126.927, 17);
+  initMap('gmap45', 37.5563, 126.9047, 16);
+  initMap('gmap46', 37.5574, 126.9245, 16);
+  initMap('gmap47', 37.5796, 126.977, 16);
+  initMap('gmap48', 37.5502, 126.8952, 15);
+  initMap('gmap49', 37.5435, 126.882, 16);
+  initMap('gmap50', 37.56, 126.927, 17);
+  initMap('gmap51', 37.5563, 126.9047, 16);
+  initMap('gmap52', 37.5574, 126.9245, 16);
+  initMap('gmap53', 37.5796, 126.977, 16);
+  initMap('gmap54', 37.5502, 126.8952, 15);
+  initMap('gmap55', 37.5435, 126.882, 16);
+  initMap('gmap56', 37.56, 126.927, 17);
+  } else { setTimeout(waitLeaflet, 300); }
+}
+window.addEventListener('load', waitLeaflet);
 </script>
 </body>
 </html>
